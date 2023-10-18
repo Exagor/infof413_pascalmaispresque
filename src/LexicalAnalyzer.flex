@@ -4,7 +4,9 @@
 %unicode
 %line
 %column
-%type Symbol
+// the return type of the lexical analyzer
+%type Symbol  
+//name of the function 
 %function nextSymbol
 %xstate YYINITIAL, SHORT_COMMENT, LONG_COMMENT
 
@@ -21,7 +23,7 @@ NUMBER = [0-9]+
 
 <YYINITIAL> {
     [ \t\r\n] { }
-    "begin" {return new Symbol(LexicalUnit.BEG, yyline, yycolumn, yytext());}
+    "begin" {return new Symbol(LexicalUnit.BEG, yyline, yycolumn, yytext());} 
     "end" {return new Symbol(LexicalUnit.END, yyline, yycolumn, yytext());}
     "..." {return new Symbol(LexicalUnit.DOTS, yyline, yycolumn, yytext());}
     ":=" {return new Symbol(LexicalUnit.ASSIGN, yyline, yycolumn, yytext());}

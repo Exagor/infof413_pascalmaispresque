@@ -8,13 +8,12 @@ class Main {
             System.out.println("Usage: java Main <input_file>");
             System.exit(1);
         }
-        File input = new File(argv[0]);
+        File input = new File(argv[0]);//on peut juste renseigner le chemin du fichier
         if (!input.exists()){
             System.out.println("File not found: "+argv[0]);
             System.exit(1);
         }
-        try{
-            FileReader reader = new FileReader(input);
+        try(FileReader reader = new FileReader(input)){
             LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(reader);
             Symbol symbol = lexicalAnalyzer.nextSymbol();
             while(symbol.getType() != LexicalUnit.EOS){
@@ -26,6 +25,7 @@ class Main {
             System.out.println("Error while opening file: "+argv[0]);
             System.exit(1);
         }
+        
 
         
 
