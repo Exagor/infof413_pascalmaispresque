@@ -1,0 +1,4 @@
+begin
+  c := a
+  print(a)
+end
