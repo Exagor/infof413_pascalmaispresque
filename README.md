@@ -36,3 +36,10 @@ java -jar dist/part1.jar test/testfile.pmp
 
 The output of the programm will be placed in the corresponding .out file in the test folder.
 
+## How to generate javadoc in .pdf file
+
+Generate the javadoc.
+
+```shell
+javadoc -d javadoc -sourcepath src/ src/Main.java
+```

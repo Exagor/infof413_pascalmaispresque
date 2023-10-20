@@ -3,9 +3,13 @@ import java.io.PrintStream;
 import java.io.File;
 import java.util.HashMap;
 
-class Main {
+public class Main {
     private static HashMap<String, Integer> symbolTable = new HashMap<>();
 
+    
+    /** 
+     * @param symbol
+     */
     public static void addSymbolToTable(Symbol symbol){
         if (symbol.getType() == LexicalUnit.VARNAME && !symbolTable.containsKey(symbol.getValue())) {
             String varName = (String) symbol.getValue();
@@ -13,13 +17,19 @@ class Main {
         }
     }
 
+    /**
+     * Print the symbol table
+     */
     public static void printSymbolTable() {
         System.out.println("Variables :");
         for (String varName : symbolTable.keySet()) {
             System.out.println(varName + "   " + symbolTable.get(varName));
         }
     }
-
+    /**
+     * Run the main
+     * @param argv
+     */
     public static void main(String[] argv){
         if (argv.length != 1){
             System.out.println("Usage: java Main <input_file>");

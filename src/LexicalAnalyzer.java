@@ -59,6 +59,10 @@ class LexicalAnalyzer {
     "\1\2\1\26\1\2\1\27\1\2\1\30\4\2\1\31"+
     "\1\32\1\33\2\2\1\34\1\35\1\36";
 
+  
+  /** 
+   * @return int[]
+   */
   private static int [] zzUnpackAction() {
     int [] result = new int[65];
     int offset = 0;
