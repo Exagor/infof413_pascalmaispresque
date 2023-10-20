@@ -62,6 +62,7 @@ NUMBER = [0-9]+
 }
 <LONG_COMMENT> {
     "''" {yybegin(YYINITIAL);}
+    \n { }
     . { }
     
 }

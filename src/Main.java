@@ -1,4 +1,5 @@
 import java.io.FileReader;
+import java.io.PrintStream;
 import java.io.File;
 import java.util.HashMap;
 
@@ -31,6 +32,12 @@ class Main {
         }
         try(FileReader reader = new FileReader(input)){
             LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(reader);
+
+            // Redirige la sortie standard vers le fichier avec l'extension .out
+            PrintStream originalOut = System.out;
+            PrintStream fileOut = new PrintStream(argv[0].replace("pmp","out"));
+            System.setOut(fileOut);
+
             Symbol symbol = lexicalAnalyzer.nextSymbol();
             while(symbol.getType() != LexicalUnit.EOS){
                 System.out.println(symbol.toString());
@@ -38,6 +45,8 @@ class Main {
                 symbol = lexicalAnalyzer.nextSymbol();
             }
             printSymbolTable(); //print the symbol table
+            // Rétablit la sortie standard
+            System.setOut(originalOut);
         }
         catch(Exception e){
             System.out.println("Error while opening file: "+argv[0]);
