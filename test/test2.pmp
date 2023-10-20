@@ -1,5 +1,5 @@
 begin
     daz:=    5
-    print    (daz)
+    print    (daz)''
     dzfezfe
 end

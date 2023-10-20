@@ -1,4 +1,3 @@
-
 %%
 %class LexicalAnalyzer
 %unicode
@@ -8,6 +7,7 @@
 %type Symbol  
 //name of the function 
 %function nextSymbol
+
 %xstate YYINITIAL, SHORT_COMMENT, LONG_COMMENT
 
 
@@ -15,6 +15,10 @@ VARNAME = [a-z][a-zA-Z0-9_]*
 NUMBER = [0-9]+
 
 %eofval{
+    if (yystate() == LONG_COMMENT) {
+        System.out.println("no closing comment token found");
+        System.exit(1);
+    }
     return new Symbol(LexicalUnit.EOS, yyline, yycolumn);
 %eofval}
 %%
