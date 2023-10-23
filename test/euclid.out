@@ -46,9 +46,7 @@ token: (	lexical unit: LPAREN
 token: a	lexical unit: VARNAME
 token: )	lexical unit: RPAREN
 token: end	lexical unit: END
-
-Variables
-a	6
-b	7
-c	10
-
+Variables :
+a   6
+b   7
+c   10

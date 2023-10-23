@@ -7,7 +7,7 @@ TEST_FILES := $(wildcard $(TEST_DIR)/*.pmp)
 all: 
 	jflex $(SRC_DIR)/LexicalAnalyzer.flex
 	javac $(SRC_DIR)/*.java
-	cd $(SRC_DIR) && java $(JAVA_PROGRAM) ../$(TEST_DIR)/test_normal.pmp
+	java -cp $(SRC_DIR) $(JAVA_PROGRAM) $(TEST_DIR)/test_normal.pmp
 
 jar:
 	jflex $(SRC_DIR)/LexicalAnalyzer.flex
@@ -17,7 +17,7 @@ jar:
 run:
 	jflex $(SRC_DIR)/LexicalAnalyzer.flex
 	javac $(SRC_DIR)/*.java
-	cd $(SRC_DIR) && java $(JAVA_PROGRAM) ../$(TEST_DIR)/test_normal.pmp
+	java -cp $(SRC_DIR) $(JAVA_PROGRAM) $(TEST_DIR)/test_normal.pmp
 
 tests: $(TEST_FILES)
 	jflex $(SRC_DIR)/LexicalAnalyzer.flex

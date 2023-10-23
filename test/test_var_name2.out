@@ -3,5 +3,7 @@ token: whileif	lexical unit: VARNAME
 token: :=	lexical unit: ASSIGN
 token: 0	lexical unit: NUMBER
 token: end	lexical unit: END
+token: lol	lexical unit: VARNAME
 Variables :
+lol   5
 whileif   2
