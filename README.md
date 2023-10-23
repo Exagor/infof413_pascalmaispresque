@@ -8,12 +8,6 @@ Use the Makefile then execute the .jar file with the test file as argument.
 
 ## Makefile
 
-To compile all jflex and java class and run the program with a given test file.
-
-```shell
-make
-```
-
  To compile all jflex and java class and create a .jar in the dist/ folder.
 
  ```shell
@@ -34,13 +28,15 @@ make clean
 
 ## How to execute
 
-Once you've created the .jar file, to run the .jar execute the folow commande with the right test file name.
+Once you've created the .jar file, to run it, run the following command with the correct test file name (make sure you're still in the root directory).
 
 ```shell
 java -jar dist/part1.jar test/testfile.pmp 
 ```
 
-The output of the programm will be placed in the corresponding .out file in the test folder.
+Replace test/testfile.pmp by the path to the test file you want to execute.
+
+The output of the programm will be placed in the corresponding .out file in the same folder as the testfile.pmp.
 
 ## How to generate javadoc
 

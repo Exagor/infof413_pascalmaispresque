@@ -13,6 +13,7 @@
 
 VARNAME = [a-z][a-zA-Z0-9_]*
 NUMBER = [0-9]+
+WHITESPACE = [ \t\r\n]+
 
 %eofval{
     if (yystate() == LONG_COMMENT) {
@@ -24,9 +25,9 @@ NUMBER = [0-9]+
 %%
 
 
-
+// initial state
 <YYINITIAL> {
-    [ \t\r\n] { }
+    {WHITESPACE} { }
     "begin" {return new Symbol(LexicalUnit.BEG, yyline, yycolumn, yytext());} 
     "end" {return new Symbol(LexicalUnit.END, yyline, yycolumn, yytext());}
     "..." {return new Symbol(LexicalUnit.DOTS, yyline, yycolumn, yytext());}
@@ -60,6 +61,7 @@ NUMBER = [0-9]+
 
     
 }
+// comment states
 <SHORT_COMMENT> {
     \n {yybegin(YYINITIAL);}
     . { }
