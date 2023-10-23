@@ -14,13 +14,13 @@ Use the Makefile then execute the .jar file with the test file as argument.
 make jar
 ```
 
-To launch all tests
+To launch all tests.
 
  ```shell
 make tests
 ```
 
-To remove every all compiled files.
+To remove all compiled files.
 
  ```shell
 make clean
@@ -34,7 +34,7 @@ Once you've created the .jar file, to run it, run the following command with the
 java -jar dist/part1.jar test/testfile.pmp 
 ```
 
-Replace test/testfile.pmp by the path to the test file you want to execute.
+Replace test/testfile.pmp by the path to the file you want to execute.
 
 The output of the programm will be placed in the corresponding .out file in the same folder as the testfile.pmp.
 
