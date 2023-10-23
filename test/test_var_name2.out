@@ -1,7 +1,0 @@
-token: begin	lexical unit: BEG
-token: whileif	lexical unit: VARNAME
-token: :=	lexical unit: ASSIGN
-token: 0	lexical unit: NUMBER
-token: end	lexical unit: END
-Variables :
-whileif   2

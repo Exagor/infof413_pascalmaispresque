@@ -1,9 +1,0 @@
-token: begin	lexical unit: BEG
-token: read	lexical unit: READ
-token: (	lexical unit: LPAREN
-token: 10	lexical unit: NUMBER
-token: alex	lexical unit: VARNAME
-token: )	lexical unit: RPAREN
-token: end	lexical unit: END
-Variables :
-alex   2
