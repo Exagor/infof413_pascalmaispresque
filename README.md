@@ -20,6 +20,12 @@ make
 make jar
 ```
 
+To launch all tests
+
+ ```shell
+make tests
+```
+
 To remove every all compiled files.
 
  ```shell

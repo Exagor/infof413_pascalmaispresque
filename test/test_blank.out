@@ -6,4 +6,11 @@ token: print	lexical unit: PRINT
 token: (	lexical unit: LPAREN
 token: daz	lexical unit: VARNAME
 token: )	lexical unit: RPAREN
-no closing coment signal found
+token: dzfezfe	lexical unit: VARNAME
+token: if	lexical unit: IF
+token: azfzafz	lexical unit: VARNAME
+token: end	lexical unit: END
+Variables :
+azfzafz   5
+daz   2
+dzfezfe   4
