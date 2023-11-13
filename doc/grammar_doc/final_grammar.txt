@@ -1,0 +1,45 @@
+[1] <Program> 		    → begin <Code> end
+[2] <Code> 		        → ε
+[3]  <InstList> 		→ <Instruction'> <Instruction_end> // on a géré l'ambiguité comme dans le tp avec le if
+[4] <Instruction_end> 	→ epsilon
+[5] 			        → ... <InstList>
+[6] <Instruction> 	    → <Assign>
+[7] 			        → <If>
+[8] 			        → <While>
+[9]  			        → <For> // pas productif 
+[10]   			        → <Print>
+[11]   			        → <Read>
+[12]   			        → begin <InstList> end
+[13]  <Assign> 		    → [VarName] := <ExprArith>
+[14]  <ExprArith> 	    → <MultExpr><ExprArith'>	// on a établis les priorité, la left associativity et enlevé la left récursion
+[15]  <ExprArith'>	    → <AddOp> <MultExpr> <ExprArith'>
+[16]   			        → epsilon
+[17]  			        → <MultExpr>
+[18]  <MultExpr> 	    → <term> <MutExpr'>
+[19]  <MultExpr'>	    → <MultOp> <Term> <MultExpr'>
+[20]   			        → epsilon
+[21]  <Term> 		    → <(ExprArith>)
+[22]  			        → - <ExprArith>
+[23]   			        → [VARNAME]
+[24]   			        → [NUMBER]
+[25]  <AddOp> 		    → +
+[26]   			        → -
+[27]  <MultOp>		    → *
+[28]   			        → /
+[29]  <If> 		        → if <Cond> then <Instruction> <If-tail>  //on a géré l'ambguité comme dans le tp avec un if-tail
+[30]  <If-tail>		    → espilon
+[31]   			        → else <Instruction>
+[32]  <Cond> 		    → <AndCond> <Cond'>		// on enlève la left récursion et on établi la priporité entre and et or
+[33]  <Cond'> 		    → or <Cond'>
+[34]  			        → epsilon
+[35]  <AndCond> 		→ <End-Condition> <AndCond'>
+[36]  <AndCond'> 	    → and <AndCond'>
+[37]   			        → epsilon
+[38]  <EndCondition>	→ { <Cond> }
+[39]   			        → <SimpleCond>
+[40]  <SimpleCond> 	    → <ExprArith> <Comp> <ExprArith>
+[41]  <Comp> 		    → =
+[42]   			        → <
+[43]  <While> 		    → while <Cond> do <Instruction>
+[44]  <Print> 		    → print([VarName])
+[45]  <Read> 		    → read([VarName])
