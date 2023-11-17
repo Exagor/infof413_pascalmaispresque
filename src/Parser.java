@@ -2,6 +2,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Parser class for parsing the input file.
+ */
 public class Parser {
     final LexicalAnalyzer lexicalAnalyzer;
     private Symbol currentSymbol;
@@ -11,7 +14,10 @@ public class Parser {
     ActionTableReader actionTableReader = new ActionTableReader();
     GrammarAnalyser grammarAnalyser = new GrammarAnalyser();
 
-
+    /**
+     * Constructor for Parser class.
+     * @param reader FileReader object for reading the input file.
+     */
     public Parser(FileReader reader) {
         lexicalAnalyzer = new LexicalAnalyzer(reader);
         try{
@@ -20,9 +26,12 @@ public class Parser {
         }catch (IOException e){
             System.out.println("Error while getting first symbols");
         }
-
     }
 
+    /**
+     * Method for getting the next symbol from the lexical analyzer.
+     * @return The next symbol.
+     */
     private Symbol getNextSymbol(){
         try{
             currentSymbol = nextSymbol;
@@ -34,11 +43,18 @@ public class Parser {
         return currentSymbol;
     }
     
+    /**
+     * Method for getting the used rules.
+     * @return An ArrayList of used rules.
+     */
     public ArrayList<Integer> getUsedRules(){
         return usedrules;
     }
 
-
+    /**
+     * Method for parsing the input file.
+     * @param etat The current state.
+     */
     public void parse(State etat){
         currentState = etat;
         Integer rule = actionTableReader.getRuleNumber(currentState, currentSymbol.getType());
@@ -49,6 +65,7 @@ public class Parser {
         System.out.println("Rule" + rule);
         Integer elemNumber = 0;
         
+        // If no rule is found for the current state and symbol, exit the program.
         if (rule == null){
             System.out.println("Error: no rule found for state " + currentState + " and symbol " + currentSymbol.getType());
             System.exit(1);
@@ -57,12 +74,13 @@ public class Parser {
         System.out.println("Rule elems: " + grammarAnalyser.getRuleElems(rule, etat));
         for(Object elem : grammarAnalyser.getRuleElems(rule, etat)){
             System.out.println("Elem: " + elem);
+            // If the element is a state, recursively parse it.
             if (elem instanceof State){
                 parse((State) elem);
             }
+            // If the element is a lexical unit, check if it matches the current symbol.
             else if (elem instanceof LexicalUnit){
                 if (currentSymbol.getType() == elem){
-
                     getNextSymbol();
                 }
                 else if (elem == LexicalUnit.EPSILON){
@@ -74,10 +92,13 @@ public class Parser {
                 }
             }
         }
-
-
     }
 
+    /**
+     * Method for getting the state type.
+     * @param input The input string.
+     * @return The state type.
+     */
     public State getType(String input){
         State state = null;
         state = grammarAnalyser.getState(input);
