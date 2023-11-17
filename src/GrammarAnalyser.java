@@ -7,51 +7,84 @@ import java.util.HashMap;
 import java.io.IOException;
 
 
+/**
+ * This class is used to analyse the grammar of a given language.
+ */
 public class GrammarAnalyser {
+    // A map to store the grammar rules
     private Map<Integer, Map<State, ArrayList<Object>>> grammar = new HashMap<>();
     
-
+    /**
+     * Constructor for the GrammarAnalyser class.
+     * It reads the grammar rules from a file and processes them.
+     */
     public GrammarAnalyser() {
         try{
-        BufferedReader grammarfile = new BufferedReader(new FileReader("doc/grammar_doc/grammar.csv"));
-        processgrammar(grammarfile);
+            // Read the grammar rules from a file
+            BufferedReader grammarfile = new BufferedReader(new FileReader("doc/grammar_doc/grammar.csv"));
+            // Process the grammar rules
+            processgrammar(grammarfile);
         }catch (IOException e){
             System.out.println("Error while reading the grammar file");
         }
-        
     }
 
+    /**
+     * This method returns the grammar rules.
+     * @return A map containing the grammar rules.
+     */
     public Map<Integer, Map<State, ArrayList<Object>>> Getgrammar(){
         return grammar;
     }
 
+    /**
+     * This method returns a specific rule element.
+     * @param rule The rule number.
+     * @param state The state.
+     * @param elem The element number.
+     * @return The rule element.
+     */
     public Object getRuleElem(Integer rule, State state, Integer elem){
         return grammar.get(rule).get(state).get(elem);
     }
 
+    /**
+     * This method returns all the elements of a specific rule.
+     * @param rule The rule number.
+     * @param state The state.
+     * @return A list containing the rule elements.
+     */
     public ArrayList<Object> getRuleElems(Integer rule, State state){
         return grammar.get(rule).get(state);
     }
 
+    /**
+     * This method sets a rule element.
+     * @param split The split string.
+     * @return A list containing the rule elements.
+     */
     private ArrayList<Object> setRuleElem(String[] split) {
         ArrayList<Object> ruleElem = new ArrayList<>();
         for(String elem : split){
             if (Character.isUpperCase(elem.charAt(0)) && !elem.equals("VARNAME") && !elem.equals("NUMBER")){
                 ruleElem.add(getState(elem));
             }
-            else{                ruleElem.add(getLexicalUnit(elem));
+            else{
+                ruleElem.add(getLexicalUnit(elem));
             }
         }
         return ruleElem;
     }
 
-    
-
+    /**
+     * This method processes the grammar rules.
+     * @param grammarfile The file containing the grammar rules.
+     * @throws IOException If an input or output exception occurred.
+     */
     private void processgrammar(BufferedReader grammarfile) throws IOException{
         String line;
         int i = 1;
         while ((line = grammarfile.readLine()) != null) {
-
             String[] lineSplit = line.split(";");
             State state = getState(lineSplit[0]);
 
@@ -63,10 +96,12 @@ public class GrammarAnalyser {
             i++;
         }
     }
-
-
     
-
+    /**
+     * This method returns the state corresponding to a given value.
+     * @param value The value.
+     * @return The state.
+     */
     public State getState(String value) {
         State state = null;
         switch (value) {
@@ -151,6 +186,11 @@ public class GrammarAnalyser {
         return state;
     }
 
+    /**
+     * This method returns the lexical unit corresponding to a given element.
+     * @param elem The element.
+     * @return The lexical unit.
+     */
     public LexicalUnit getLexicalUnit(String elem) {
         LexicalUnit lexicalUnit = null;
         switch (elem){

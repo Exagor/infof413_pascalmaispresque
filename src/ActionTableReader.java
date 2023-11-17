@@ -46,10 +46,20 @@ public class ActionTableReader {
         }
     }
 
+    /**
+     * Returns the action table.
+     * @return The action table.
+     */
     public Map<State, Map<LexicalUnit, Integer>> GetActionTable(){
         return actionTable;
     }
 
+    /**
+     * Returns the rule number for a given state and lexical unit.
+     * @param etat The state.
+     * @param lu The lexical unit.
+     * @return The rule number.
+     */
     public Integer getRuleNumber(State etat, LexicalUnit lu) {
         return actionTable.get(etat).get(lu);
     }
@@ -148,6 +158,11 @@ public class ActionTableReader {
     }
 
 
+    /**
+     * Adds a state to the list of states based on a string value.
+     * @param value The string value.
+     * @return The added state.
+     */
     private State addState(String value) {
         State state = null;
         switch (value) {
@@ -233,8 +248,11 @@ public class ActionTableReader {
         return state;
     }
 
+    /**
+     * Sets the lexical units based on the first line of the file.
+     * @param firstline The first line of the file.
+     */
     public void setLexicalUnits(String firstline) {
-
         String[] terminaux = firstline.split(";");
         for (String terminal : terminaux) {
             switch (terminal){
