@@ -24,5 +24,6 @@ public enum LexicalUnit{
     DO,
     PRINT,
     READ,
+    EPSILON,
     EOS
 }

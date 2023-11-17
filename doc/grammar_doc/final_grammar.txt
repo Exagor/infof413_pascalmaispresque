@@ -14,7 +14,7 @@
 [14]  <ExprArith> 	    → <MultExpr><ExprArith'>	// on a établis les priorité, la left associativity et enlevé la left récursion
 [15]  <ExprArith'>	    → <AddOp> <MultExpr> <ExprArith'>
 [16]   			        → epsilon
-[17]  <MultExpr> 	    → <term> <MutExpr'>
+[17]  <MultExpr> 	    → <Term> <MultExpr'>
 [18]  <MultExpr'>	    → <MultOp> <Term> <MultExpr'>
 [19]   			        → epsilon
 [20]  <Term> 		    → (<ExprArith>)
@@ -31,7 +31,7 @@
 [31]  <Cond> 		    → <AndCond> <OrCond>		// on enlève la left récursion et on établi la priporité entre and et or
 [32]  <OrCond> 		    → or <AndCond> <OrCond>
 [33]  			        → epsilon
-[34]  <AndCond> 		→ <End-Condition> <AndCond'>
+[34]  <AndCond> 		→ <EndCondition> <AndCond'>
 [35]  <AndCond'> 	    → and <EndCondition> <AndCond'>
 [36]   			        → epsilon
 [37]  <EndCondition>	→ { <Cond> }
@@ -41,4 +41,4 @@
 [41]   			        → <
 [42]  <While> 		    → while <Cond> do <Instruction>
 [43]  <Print> 		    → print([VarName])
-[45]  <Read> 		    → read([VarName])
+[44]  <Read> 		    → read([VarName])

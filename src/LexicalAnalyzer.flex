@@ -12,7 +12,7 @@
 
 
 VARNAME = [a-z][a-zA-Z0-9_]*
-NUMBER = [1-9][0-9]*
+NUMBER = [0-9]*
 WHITESPACE = [ \t\r\n]+
 
 %eofval{

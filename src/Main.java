@@ -3,7 +3,9 @@ import java.io.FileReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
     private static HashMap<String, Integer> symbolTable = new HashMap<>();
@@ -50,18 +52,26 @@ public class Main {
         // PrintStream fileOut = new PrintStream(argv[0].replace("pmp","out"));
         // System.setOut(fileOut);
 
-        Symbol symbol = lexicalAnalyzer.nextSymbol();
-        while(symbol.getType() != LexicalUnit.EOS){
-            System.out.println(symbol.toString());
-            addSymbolToTable(symbol);
-            symbol = lexicalAnalyzer.nextSymbol();
-        }
-        printSymbolTable(); //print the symbol table
+        // Symbol symbol = lexicalAnalyzer.nextSymbol();
+        // while(symbol.getType() != LexicalUnit.EOS){
+        //     System.out.println(symbol.toString());
+        //     addSymbolToTable(symbol);
+        //     symbol = lexicalAnalyzer.nextSymbol();
+        // }
+        // printSymbolTable(); //print the symbol table
         // Rétablit la sortie standard
         // System.setOut(originalOut);
 
         ActionTableReader actionTableReader = new ActionTableReader("doc/grammar_doc/action_table.csv");
-        System.out.println(actionTableReader.getRuleNumber(State.AddOp, LexicalUnit.VARNAME));
+        //System.out.println(actionTableReader.GetActionTable());
+        GrammarAnalyser grammarAnalyser = new GrammarAnalyser();
+
+        Map<Integer, Map<State, ArrayList<Object>>> grammar = grammarAnalyser.Getgrammar();
+        System.out.println(grammar);
+        Parser parser = new Parser(reader);
+        parser.parse(State.Program);
+        System.out.println(parser.getUsedRules());
+        
     }
         
     
