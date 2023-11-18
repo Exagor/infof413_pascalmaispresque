@@ -53,7 +53,6 @@ public class ParseTree {
 
         for (ParseTree child : children) {
             if(!child.label.toTexString().equals("null")){
-                System.out.println(child.label.toTexString());
                 treeTeX.append(child.toLaTexTree());
             }
             
