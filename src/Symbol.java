@@ -83,9 +83,9 @@ public class Symbol{
 
 	public String toTexString(){
 		if(this.isTerminal()){
-			final String value	= this.value != null? this.value.toString() : "null";
-			value.replace("_", "\\_");
-			return value;
+			String value = this.type != null && this.type!= LexicalUnit.EPSILON? this.type.toString() : "null" ;  // pour imprimer les valeurs des lexical units ils suffit de remplacer this.type par this.value
+			String latexvalue = convertToLatexFriendly(value);
+			return latexvalue;
 		}
 		else if(this.value == null)
 			return null;
@@ -102,8 +102,7 @@ public class Symbol{
 
 	private String convertToLatexFriendly(String input) {
         // Remplace "_" par "\\_" pour que LaTeX ne considère pas "_" comme un caractère spécial
-        String latexString = input.replace("_", "\\_");
-		
+        String latexString = input.replace("_", "\\_").replace("<", "$<$");
         return latexString;
     }
 
