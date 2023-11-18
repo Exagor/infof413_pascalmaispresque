@@ -19,7 +19,7 @@
 [16] <MultExpr> 	→ <term> <MutExpr'>
 [aa] <MultExpr'>	→ <MultOp> <Term> <MultExpr'>
 [aa] 			→ epsilon
-[18] <Term> 		→ <(ExprArith>)
+[18] <Term> 		→ (<ExprArith>)
 [aa]			→ - <ExprArith>
 [19] 			→ [VARNAME]
 [20] 			→ [NUMBER]
