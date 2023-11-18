@@ -31,17 +31,27 @@ make clean
 Once you've created the .jar file, to run it, run the following command with the correct test file name (make sure you're still in the root directory).
 
 ```shell
-java -jar dist/part1.jar test/testfile.pmp 
+java -jar dist/part2.jar test/testfile.pmp 
 ```
 
 Replace test/testfile.pmp by the path to the file you want to execute.
 
-The output of the programm will be placed in the corresponding .out file in the same folder as the testfile.pmp.
+You can add the -wt flag to display the derivation tree followed by the folder where you want it to be saved.
+
+```shell
+java -jar dist/part2.jar test/testfile.pmp -wt more/
+```
+
+Replace more/ by the path where you want the derivation tree to be saved.
+
+(The output of the programm will be placed in the corresponding .out file in the same folder as the testfile.pmp.)
 
 ## How to generate javadoc
 
-Generate the javadoc.
+Generate the javadoc in the current directory.
 
 ```shell
 javadoc -d javadoc -sourcepath src/ src/Main.java
 ```
+
+After the "-d" flag, specify the path to the javadoc folder (it creates the folder if it doesn't exist).

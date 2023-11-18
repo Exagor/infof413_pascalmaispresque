@@ -36,7 +36,7 @@ public class Main {
      * @param argv
      */
     public static void main(String[] argv) throws FileNotFoundException, IOException, SecurityException{
-        if (argv.length != 1){
+        if (argv.length < 1){ //Check if there is an argument
             System.out.println("Usage: java Main <input_file>");
             System.exit(1);
         }
@@ -47,11 +47,24 @@ public class Main {
         }
         FileReader reader = new FileReader(input);
         Parser parser = new Parser(reader);
-        ParseTree parsetree = parser.parse(State.Program);
-        FileWriter output = new FileWriter("./test/parsetree.tex");
-        output.write(parsetree.toLaTeX());
-        output.close();
         System.out.println(parser.getUsedRules());
+
+        //Check for the flags
+        for (int i = 1; i<argv.length; i++){//we skip the first argument because it's the input file
+            String arg = argv[i];
+            if (arg.equals("-wt")){
+                if (i+1>=argv.length){
+                    System.out.println("Usage: java Main <input_file> -wt <output_file>");
+                    System.exit(1);
+                }
+                ParseTree parsetree = parser.parse(State.Program);
+                FileWriter output = new FileWriter(argv[i+1]+"parseTree.tex");
+                output.write(parsetree.toLaTeX());
+                output.close();
+            }
+        }
+
+       
         
     }
         
