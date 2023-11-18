@@ -1,4 +1,5 @@
 import java.io.FileReader;
+import java.io.FileWriter;
 // import java.io.PrintStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,7 +47,10 @@ public class Main {
         }
         FileReader reader = new FileReader(input);
         Parser parser = new Parser(reader);
-        parser.parse(State.Program);
+        ParseTree parsetree = parser.parse(State.Program);
+        FileWriter output = new FileWriter("./test/parsetree.tex");
+        output.write(parsetree.toLaTeX());
+        output.close();
         System.out.println(parser.getUsedRules());
         
     }

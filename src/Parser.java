@@ -13,6 +13,7 @@ public class Parser {
     private ArrayList<Integer> usedrules = new ArrayList<Integer>();
     ActionTableReader actionTableReader = new ActionTableReader();
     GrammarAnalyser grammarAnalyser = new GrammarAnalyser();
+    private ParseTree parseTree;
 
     /**
      * Constructor for Parser class.
@@ -23,6 +24,7 @@ public class Parser {
         try{
             currentSymbol = lexicalAnalyzer.nextSymbol();
             nextSymbol = lexicalAnalyzer.nextSymbol();
+            parseTree = new ParseTree(currentSymbol);
         }catch (IOException e){
             System.out.println("Error while getting first symbols");
         }
@@ -55,7 +57,8 @@ public class Parser {
      * Method for parsing the input file.
      * @param etat The current state.
      */
-    public void parse(State etat){
+    public ParseTree parse(State etat){
+
         System.out.println("Current state: " + currentState);
         System.out.println("Current symbol: " + currentSymbol.getType());
         currentState = etat;
@@ -63,27 +66,35 @@ public class Parser {
         usedrules.add(rule);
         System.out.println("Rule" + rule);
 
-        Integer elemNumber = 0;
         
         // If no rule is found for the current state and symbol, exit the program.
         if (rule == null){
             System.out.println("Error: no rule found for state " + currentState + " and symbol " + currentSymbol.getType());
             System.exit(1);
         }
-        int i = 0;
         System.out.println("Rule elems: " + grammarAnalyser.getRuleElems(rule, etat) + "\n");
+
+        ArrayList<ParseTree> cldn = new ArrayList<ParseTree>();
+        ParseTree tree = new ParseTree(new Symbol(currentState), cldn);
+        
+
         for(Object elem : grammarAnalyser.getRuleElems(rule, etat)){
             System.out.println("Elem: " + elem);
             // If the element is a state, recursively parse it.
             if (elem instanceof State){
-                parse((State) elem);
+                ParseTree child = parse((State) elem);
+                cldn.add(child);
             }
             // If the element is a lexical unit, check if it matches the current symbol.
             else if (elem instanceof LexicalUnit){
                 if (currentSymbol.getType() == elem){
-                    getNextSymbol();
+                    ParseTree child = new ParseTree(currentSymbol);
+                    cldn.add(child);
+                    getNextSymbol();           
                 }
                 else if (elem == LexicalUnit.EPSILON){
+                    ParseTree child = new ParseTree(new Symbol(LexicalUnit.EPSILON));
+                    cldn.add(child);
                     continue;
                 }
                 else{
@@ -91,9 +102,10 @@ public class Parser {
                     System.exit(1);
                 }
             }
-            
+
         }
         System.out.println("End of rule " + rule + "\n");
+        return tree;
     }
 
     /**

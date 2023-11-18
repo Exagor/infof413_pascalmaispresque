@@ -29,6 +29,14 @@ public class Symbol{
 		this(unit,UNDEFINED_POSITION,UNDEFINED_POSITION,value);
 	}
 
+	/**
+	 * new constructor for non-terminal symbols
+	 * @param value
+	 */
+	public Symbol(Object value){
+		this(null,UNDEFINED_POSITION,UNDEFINED_POSITION,value);
+	}
+
 	public boolean isTerminal(){
 		return this.type != null;
 	}
@@ -67,6 +75,11 @@ public class Symbol{
 			final String type		= this.type  != null? this.type.toString()  : "null";
 			return "token: "+value+"\tlexical unit: "+type;
 		}
+		else if(this.getValue() instanceof State){
+			return "token: "+this.getValue().toString();
+		}
+
+		
 		return "Non-terminal symbol";
 	}
 }
