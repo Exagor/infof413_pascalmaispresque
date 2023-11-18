@@ -6,7 +6,7 @@ TEST_FILES := $(wildcard $(TEST_DIR)/*.pmp)
 .SILENT: all jar compile tests clean
 
 all:compile
-	java -cp $(SRC_DIR) $(JAVA_PROGRAM) $(TEST_DIR)/test_normal.pmp
+	java -cp $(SRC_DIR) $(JAVA_PROGRAM) $(TEST_DIR)/euclid.pmp
 
 jar:compile
 	jar cfm dist/part2.jar more/Main.txt -C $(SRC_DIR) .
