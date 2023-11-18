@@ -44,11 +44,19 @@ public class ParseTree {
     public String toLaTexTree() {
         StringBuilder treeTeX = new StringBuilder();
         treeTeX.append("[");
-        treeTeX.append("{" + label.toString() + "}");
-        treeTeX.append(" ");
+        String labelString = label.toTexString();
+        if(labelString != null){    
+            treeTeX.append("{" + labelString + "}");
+            treeTeX.append(" ");
+        }
+        
 
         for (ParseTree child : children) {
-            treeTeX.append(child.toLaTexTree());
+            if(!child.label.toTexString().equals("null")){
+                System.out.println(child.label.toTexString());
+                treeTeX.append(child.toLaTexTree());
+            }
+            
         }
         treeTeX.append("]");
         return treeTeX.toString();
@@ -61,7 +69,7 @@ public class ParseTree {
     public String toTikZ() {
         StringBuilder treeTikZ = new StringBuilder();
         treeTikZ.append("node {");
-        treeTikZ.append(label.toString());  // Implement this yourself in Symbol.java
+        treeTikZ.append(label.toTexString());  // Implement this yourself in Symbol.java
         treeTikZ.append("}\n");
         for (ParseTree child : children) {
             treeTikZ.append("child { ");

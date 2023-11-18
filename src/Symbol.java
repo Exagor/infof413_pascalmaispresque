@@ -75,11 +75,37 @@ public class Symbol{
 			final String type		= this.type  != null? this.type.toString()  : "null";
 			return "token: "+value+"\tlexical unit: "+type;
 		}
-		else if(this.getValue() instanceof State){
-			return "token: "+this.getValue().toString();
-		}
+		
 
 		
 		return "Non-terminal symbol";
 	}
+
+	public String toTexString(){
+		if(this.isTerminal()){
+			final String value	= this.value != null? this.value.toString() : "null";
+			value.replace("_", "\\_");
+			return value;
+		}
+		else if(this.value == null)
+			return null;
+		else{
+			final String value = this.getValue().toString();
+			String latexvalue = convertToLatexFriendly(value);
+			return latexvalue;
+
+		}
+
+		
+		//return "Non-terminal symbol";
+	}
+
+	private String convertToLatexFriendly(String input) {
+        // Remplace "_" par "\\_" pour que LaTeX ne considère pas "_" comme un caractère spécial
+        String latexString = input.replace("_", "\\_");
+		
+        return latexString;
+    }
+
+
 }
