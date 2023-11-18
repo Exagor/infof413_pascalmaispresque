@@ -83,7 +83,8 @@ public class Symbol{
 
 	public String toTexString(){
 		if(this.isTerminal()){
-			String value = this.type != null? this.type.toString() : "null";  // pour imprimer les valeurs des lexical units ils suffit de remplacer this.type par this.value
+			String value = this.type != null && this.type!= LexicalUnit.EPSILON? this.type.toString() : "null" ;  // pour imprimer les valeurs des lexical units ils suffit de remplacer this.type par this.value
+			System.out.println("value: "+value);
 			String latexvalue = convertToLatexFriendly(value);
 			return latexvalue;
 		}
