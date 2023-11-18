@@ -81,8 +81,7 @@ public class ActionTableReader {
     private void processFile(BufferedReader br) throws IOException {
         String line;
         setLexicalUnits(br.readLine()); // First line is the lexical units
-        System.out.println("Lexical units : " + lexicalUnits);
-        System.out.println("Lexical units size : " + lexicalUnits.size());
+
 
         while ((line = br.readLine()) != null) {
             processLine(line);
@@ -125,12 +124,8 @@ public class ActionTableReader {
      */
     private void processValues(String[] values) {
         State state = addState(values[0]);
-        System.out.println("size values : " + values.length);
         for (int i = 1; i < values.length; i++) {
             String strValue = values[i];
-            
-            System.out.print("lexicale unit : " + lexicalUnits.get(i - 1) + " ");
-            System.out.println(strValue);
             if (strValue == null || strValue.isEmpty()) {
                 strValue = "0"; // Empty values are 0
             }

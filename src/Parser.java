@@ -56,13 +56,13 @@ public class Parser {
      * @param etat The current state.
      */
     public void parse(State etat){
+        System.out.println("Current state: " + currentState);
+        System.out.println("Current symbol: " + currentSymbol.getType());
         currentState = etat;
         Integer rule = actionTableReader.getRuleNumber(currentState, currentSymbol.getType());
         usedrules.add(rule);
-
-        System.out.println("Current state: " + currentState);
-        System.out.println("Current symbol: " + currentSymbol.getType());
         System.out.println("Rule" + rule);
+
         Integer elemNumber = 0;
         
         // If no rule is found for the current state and symbol, exit the program.
@@ -71,7 +71,7 @@ public class Parser {
             System.exit(1);
         }
         int i = 0;
-        System.out.println("Rule elems: " + grammarAnalyser.getRuleElems(rule, etat));
+        System.out.println("Rule elems: " + grammarAnalyser.getRuleElems(rule, etat) + "\n");
         for(Object elem : grammarAnalyser.getRuleElems(rule, etat)){
             System.out.println("Elem: " + elem);
             // If the element is a state, recursively parse it.
@@ -91,7 +91,9 @@ public class Parser {
                     System.exit(1);
                 }
             }
+            
         }
+        System.out.println("End of rule " + rule + "\n");
     }
 
     /**
