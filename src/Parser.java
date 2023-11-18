@@ -13,7 +13,6 @@ public class Parser {
     private ArrayList<Integer> usedrules = new ArrayList<Integer>();
     ActionTableReader actionTableReader = new ActionTableReader();
     GrammarAnalyser grammarAnalyser = new GrammarAnalyser();
-    private ParseTree parseTree;
 
     /**
      * Constructor for Parser class.
@@ -24,7 +23,6 @@ public class Parser {
         try{
             currentSymbol = lexicalAnalyzer.nextSymbol();
             nextSymbol = lexicalAnalyzer.nextSymbol();
-            parseTree = new ParseTree(currentSymbol);
         }catch (IOException e){
             System.out.println("Error while getting first symbols");
         }
