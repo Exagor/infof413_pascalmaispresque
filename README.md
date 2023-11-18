@@ -34,15 +34,15 @@ Once you've created the .jar file, to run it, run the following command with the
 java -jar dist/part2.jar test/testfile.pmp 
 ```
 
-Replace test/testfile.pmp by the path to the file you want to execute.
+Replace test/testfile.pmp with the path to the file you want to run.
 
-You can add the -wt flag to display the derivation tree followed by the folder where you want it to be saved.
+You can add the -wt flag to display the parse tree of your code followed by the folder where you want it to be saved.
 
 ```shell
 java -jar dist/part2.jar test/testfile.pmp -wt more/
 ```
 
-Replace more/ by the path where you want the derivation tree to be saved.
+Replace more/ by the path where you want the parse tree to be saved.
 
 (The output of the programm will be placed in the corresponding .out file in the same folder as the testfile.pmp.)
 
@@ -54,4 +54,4 @@ Generate the javadoc in the current directory.
 javadoc -d javadoc -sourcepath src/ src/Main.java
 ```
 
-After the "-d" flag, specify the path to the javadoc folder (it creates the folder if it doesn't exist).
+After the "-d" flag, specify the path to the javadoc folder (it will create the folder if it doesn't exist).
