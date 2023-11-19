@@ -1,6 +1,6 @@
 begin
     a:=2... **this is a short comment
-    print(a)...
+    print(a)
     ''this is a long comment
     dzadza:=3...
     ''

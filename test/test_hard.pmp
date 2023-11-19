@@ -1,6 +1,6 @@
 begin
   read(c)...
-  while 0 < b and c< do
+  while 0 < b and c< 0 do
     begin
       c := b...
       while b < a+1 do     ** computation of modulo

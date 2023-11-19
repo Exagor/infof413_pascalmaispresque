@@ -43,8 +43,8 @@ WHITESPACE = [ \t\r\n]+
     "else" {return new Symbol(LexicalUnit.ELSE, yyline, yycolumn, yytext());}
     "and" {return new Symbol(LexicalUnit.AND, yyline, yycolumn, yytext());}
     "or" {return new Symbol(LexicalUnit.OR, yyline, yycolumn, yytext());}
-    "[" {return new Symbol(LexicalUnit.LBRACK, yyline, yycolumn, yytext());}
-    "]" {return new Symbol(LexicalUnit.RBRACK, yyline, yycolumn, yytext());}
+    "{" {return new Symbol(LexicalUnit.LBRACK, yyline, yycolumn, yytext());}
+    "}" {return new Symbol(LexicalUnit.RBRACK, yyline, yycolumn, yytext());}
     "=" {return new Symbol(LexicalUnit.EQUAL, yyline, yycolumn, yytext());}
     "<" {return new Symbol(LexicalUnit.SMALLER, yyline, yycolumn, yytext());}
     "while" {return new Symbol(LexicalUnit.WHILE, yyline, yycolumn, yytext());}
