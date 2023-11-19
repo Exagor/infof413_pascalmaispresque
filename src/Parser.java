@@ -36,7 +36,7 @@ public class Parser {
         try{
             currentSymbol = nextSymbol;
             nextSymbol = lexicalAnalyzer.nextSymbol();
-            System.out.println("Next symbol: " + currentSymbol.getType());
+            //System.out.println("Next symbol: " + currentSymbol.getType());
         }catch (IOException e){
             System.out.println("Error while getting next symbol");
         }
@@ -57,12 +57,12 @@ public class Parser {
      */
     public ParseTree parse(State etat){
 
-        System.out.println("Current state: " + currentState);
-        System.out.println("Current symbol: " + currentSymbol.getType());
+        //System.out.println("Current state: " + currentState);
+        //System.out.println("Current symbol: " + currentSymbol.getType());
         currentState = etat;
         Integer rule = actionTableReader.getRuleNumber(currentState, currentSymbol.getType());
         usedrules.add(rule);
-        System.out.println("Rule" + rule);
+        //System.out.println("Rule" + rule);
 
         
         // If no rule is found for the current state and symbol, exit the program.
@@ -70,14 +70,14 @@ public class Parser {
             System.out.println("Error: no rule found for state " + currentState + " and symbol " + currentSymbol.getType());
             System.exit(1);
         }
-        System.out.println("Rule elems: " + grammarAnalyser.getRuleElems(rule, etat) + "\n");
+        //System.out.println("Rule elems: " + grammarAnalyser.getRuleElems(rule, etat) + "\n");
 
         ArrayList<ParseTree> cldn = new ArrayList<ParseTree>();
         ParseTree tree = new ParseTree(new Symbol(currentState), cldn);
         
 
         for(Object elem : grammarAnalyser.getRuleElems(rule, etat)){
-            System.out.println("Elem: " + elem);
+            //System.out.println("Elem: " + elem);
             // If the element is a state, recursively parse it.
             if (elem instanceof State){
                 ParseTree child = parse((State) elem);
@@ -102,7 +102,7 @@ public class Parser {
             }
 
         }
-        System.out.println("End of rule " + rule + "\n");
+        //System.out.println("End of rule " + rule + "\n");
         return tree;
     }
 
