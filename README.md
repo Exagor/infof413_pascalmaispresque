@@ -44,11 +44,9 @@ java -jar dist/part2.jar test/testfile.pmp -wt more/
 
 Replace more/ by the path where you want the parse tree to be saved.
 
-(The output of the programm will be placed in the corresponding .out file in the same folder as the testfile.pmp.)
-
 ## How to generate javadoc
 
-Generate the javadoc in the current directory.
+Generate the javadoc.
 
 ```shell
 javadoc -d javadoc -sourcepath src/ src/Main.java

@@ -25,7 +25,6 @@ clean:
 	echo "Cleaning..."
 	rm $(SRC_DIR)/*.class
 	rm $(SRC_DIR)/LexicalAnalyzer.java~
-	rm $(TEST_DIR)/*.out
 	echo "Cleaning done"
 
 .PHONY: tests clean

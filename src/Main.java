@@ -47,6 +47,7 @@ public class Main {
         }
         FileReader reader = new FileReader(input);
         Parser parser = new Parser(reader);
+        ParseTree parsetree = parser.parse(State.Program);
         System.out.println(parser.getUsedRules());
 
         //Check for the flags
@@ -57,16 +58,10 @@ public class Main {
                     System.out.println("Usage: java Main <input_file> -wt <output_file>");
                     System.exit(1);
                 }
-                ParseTree parsetree = parser.parse(State.Program);
                 FileWriter output = new FileWriter(argv[i+1]+"parseTree.tex");
                 output.write(parsetree.toLaTeX());
                 output.close();
             }
-        }
-
-       
-        
+        } 
     }
-        
-    
 }
