@@ -54,7 +54,7 @@ public class Main {
         }
         FileReader reader = new FileReader(input);
         Parser parser = new Parser(reader);
-        ParseTree parsetree = parser.parse(State.Program);
+        parser.parse(State.Program);
         printParseResult(parser);
     }
 
