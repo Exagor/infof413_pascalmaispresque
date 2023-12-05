@@ -9,7 +9,7 @@ all:compile
 	java -cp $(SRC_DIR) $(JAVA_PROGRAM) $(TEST_DIR)/euclid.pmp
 
 jar:compile
-	jar cfm dist/part2.jar more/Main.txt -C $(SRC_DIR) .
+	jar cfm dist/part3.jar more/Main.txt -C $(SRC_DIR) .
 
 compile:
 	jflex $(SRC_DIR)/LexicalAnalyzer.flex
