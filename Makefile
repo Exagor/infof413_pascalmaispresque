@@ -17,7 +17,8 @@ compile:
 
 tests: $(TEST_FILES) compile
 	for test_file in $(TEST_FILES); do \
-		echo "Testing $$test_file"; \
+		echo "\nTesting $$test_file\n"; \
+		echo "------------------\n"; \
 		java -cp $(SRC_DIR) $(JAVA_PROGRAM) "$$test_file"; \
 	done
 	echo "Done testing"

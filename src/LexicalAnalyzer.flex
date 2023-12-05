@@ -56,7 +56,7 @@ WHITESPACE = [ \t\r\n]+
     {NUMBER} {return new Symbol(LexicalUnit.NUMBER, yyline, yycolumn, yytext());}
     "''" {yybegin(LONG_COMMENT);}
     "**" {yybegin(SHORT_COMMENT);}
-    . {System.out.println("Illegal character: " + yytext());}
+    . {System.out.println("Illegal character: " + yytext()); System.exit(1);}
 
 
     

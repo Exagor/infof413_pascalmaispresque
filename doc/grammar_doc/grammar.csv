@@ -25,9 +25,9 @@ AddOp;+
 AddOp;-
 MultOp;*
 MultOp;/
-If;if,Cond,the,Instruction,else,If-tail
+If;if,Cond,then,Instruction,else,If-tail
 If-tail;epsilon
-If-tail;Instuction
+If-tail;Instruction
 Cond;AndCond,OrCond
 OrCond;or,AndCond,OrCond
 OrCond;epsilon

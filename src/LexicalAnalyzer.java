@@ -656,7 +656,7 @@ class LexicalAnalyzer {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { System.out.println("Illegal character: " + yytext());
+            { System.out.println("Illegal character: " + yytext()); System.exit(1);
             } 
             // fall through
           case 31: break;

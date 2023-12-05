@@ -26,9 +26,12 @@ public class LlvmWriter {
     public void program(){
         llvmCode.append("define i32 @main() {\n");
         llvmCode.append("entry:\n");
+        //code();
+        //
         llvmCode.append("ret i32 0\n");
         llvmCode.append("}\n");
     }
+
 
 
     public void writeInFile(String fileName) {
