@@ -31,7 +31,7 @@ public class LlvmWriter {
     }
 
 
-    public void writeInFile(String llvmCode, String fileName) {
+    public void writeInFile(String fileName) {
         try {
         FileWriter writer = new FileWriter(fileName);
         writer.write(llvmCode.toString());
