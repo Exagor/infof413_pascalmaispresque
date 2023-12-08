@@ -28,10 +28,10 @@ make clean
 
 ## How to execute
 
-Once you've created the .jar file, to run it, run the following command with the correct test file name (make sure you're still in the root directory).
+Once you've created the .jar file, to run it, run the following command with the correct test file name (make sure you're still in the root directory). The program will automatically generate llvm code in the more/ directory.
 
 ```shell
-java -jar dist/part2.jar test/testfile.pmp 
+java -jar dist/part3.jar test/testfile.pmp 
 ```
 
 Replace test/testfile.pmp with the path to the file you want to run.
@@ -39,10 +39,8 @@ Replace test/testfile.pmp with the path to the file you want to run.
 You can add the -wt flag to display the parse tree of your code followed by the file.tex where you want it to be saved.
 
 ```shell
-java -jar dist/part2.jar -wt file.tex test/testfile.pmp
+java -jar dist/part3.jar -wt file.tex test/testfile.pmp
 ```
-
-Replace more/ by the path where you want the parse tree to be saved.
 
 ## How to generate javadoc
 

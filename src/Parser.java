@@ -11,7 +11,6 @@ public class Parser {
     private Symbol nextSymbol;
     private State currentState = State.Program;
     private ArrayList<Integer> usedrules = new ArrayList<Integer>();
-    private LlvmWriter llvmWriter = new LlvmWriter();
     ActionTableReader actionTableReader = new ActionTableReader();
     GrammarAnalyser grammarAnalyser = new GrammarAnalyser();
 
@@ -117,12 +116,5 @@ public class Parser {
         State state = null;
         state = grammarAnalyser.getState(input);
         return state;
-    }
-    /**
-     * Method for writing the llvm code to a file.
-     * @param fileName
-     */
-    public void llvmToFile(String fileName){
-        llvmWriter.writeInFile(fileName);
     }
 }

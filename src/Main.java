@@ -55,7 +55,11 @@ public class Main {
         FileReader reader = new FileReader(input);
         Parser parser = new Parser(reader);
         parser.parse(State.Program);
-        printParseResult(parser);
+        //printParseResult(parser);
+        //Write to llvm code
+        LlvmWriter llvmWriter = new LlvmWriter(parser.getUsedRules());
+        llvmWriter.writeInFile("more/output.ll");
+
     }
 
     /**
@@ -76,6 +80,9 @@ public class Main {
         FileWriter output = new FileWriter(sourceFileTex);
         output.write(parsetree.toLaTeX());
         output.close();
+        //Write to llvm code
+        LlvmWriter llvmWriter = new LlvmWriter(parser.getUsedRules());
+        llvmWriter.writeInFile("more/output.ll");
     }
 
     /**
