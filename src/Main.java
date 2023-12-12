@@ -76,7 +76,7 @@ public class Main {
         FileReader reader = new FileReader(input);
         Parser parser = new Parser(reader);
         ParseTree parsetree = parser.parse(State.Program);
-        printParseResult(parser);
+        //printParseResult(parser);
         FileWriter output = new FileWriter(sourceFileTex);
         output.write(parsetree.toLaTeX());
         output.close();

@@ -70,15 +70,15 @@ public class Parser {
             System.out.println("Error: no rule found for state " + currentState + " and symbol " + currentSymbol.getType());
             System.exit(1);
         }
-        System.out.println("Rule elems: " + grammarAnalyser.getRuleElems(rule, etat) + "\n");
+        //System.out.println("Rule elems: " + grammarAnalyser.getRuleElems(rule, etat) + "\n");
 
         ArrayList<ParseTree> cldn = new ArrayList<ParseTree>();
         ParseTree tree = new ParseTree(new Symbol(currentState), cldn);
         
 
         for(Object elem : grammarAnalyser.getRuleElems(rule, etat)){
-            System.out.println("Elem: " + elem);
-            System.out.println("Current symbol: " + currentSymbol.getType());
+            //System.out.println("Elem: " + elem);
+            //System.out.println("Current symbol: " + currentSymbol.getType());
             // If the element is a state, recursively parse it.
             if (elem instanceof State){
                 ParseTree child = parse((State) elem);

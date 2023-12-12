@@ -33,7 +33,7 @@ public class LlvmWriter {
     }
 
 
-    private void program(){
+    private void program(){//1
         llvmCode.append("define i32 @main() {\n");
         llvmCode.append("entry:\n");
         
@@ -49,25 +49,73 @@ public class LlvmWriter {
         llvmCode.append("}\n");
     }
 
-    private void code(){
+    private void code(){//2
         //Code llvm avec append 
         //TODO code llvm a écrire
         if (rules.get(ruleCounter) == 4) {
             ruleCounter++;
-            //instruction();
+            instList();
             
         }
         //TODO code llvm a écrire
     }
 
-    private void instruction(){
+    private void instList(){//4
         //Code llvm avec append 
         //TODO code llvm a écrire
-        if (true) {
+        if (rules.get(ruleCounter) == 7) {//Instruction
             ruleCounter++;
+            instruction();
             
         }
+
+        if (rules.get(ruleCounter)== 5){//epsilon
+            ruleCounter++;
+        }
         //TODO code llvm a écrire
+    }
+
+    private void instruction(){//7
+        //TODO code llvm
+        switch (rules.get(ruleCounter)){
+            case 8:
+                ruleCounter++;
+                instIf();
+                break;
+            case 9:
+                ruleCounter++;
+                instWhile();
+                break;
+            case 10:
+                ruleCounter++;
+                instPrint();
+                break;
+            case 11:
+                ruleCounter++;
+                instRead();
+                break;
+            case 12:
+                ruleCounter++;
+                //TODO llvm code
+                instList();
+                break;
+        }
+    }
+
+    private void instIf(){//28
+
+    }
+
+    private void instWhile(){//42
+
+    }
+
+    private void instPrint(){//43
+
+    }
+
+    private void instRead(){//44
+
     }
 
     public void writeInFile(String fileName) {
