@@ -37,6 +37,30 @@ public class LlvmWriter {
     }
 
     private void program(){//1
+        if (rules.contains(43)) {// add the println definition if needed
+            llvmCode.append("@.strP = private unnamed_addr constant [4 x i8] c\"%d\\0A\\00\", align 1\n");
+            llvmCode.append("define void @println(i32 %x) #0 {\n");
+            llvmCode.append("%1 = alloca i32, align 4\n");
+            llvmCode.append("store i32 %x, i32* %1, align 4\n");
+            llvmCode.append("%2 = load i32, i32* %1, align 4\n");
+            llvmCode.append("%3 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.strP, i32 0, i32 0), i32 %2)\n");
+            llvmCode.append("ret void\n");
+            llvmCode.append("}\n");
+            llvmCode.append("\n");
+            llvmCode.append("declare i32 @printf(i8*, ...) #1\n");
+        }
+        if (rules.contains(44)){
+            llvmCode.append("@.strR = private unnamed_addr constant [3 x i8] c\"%d\\00\", align 1\n");
+            llvmCode.append("define i32 @readInt() #0 {\n");
+            llvmCode.append("%x = alloca i32, align 4\n");
+            llvmCode.append("%1 = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.strR, i32 0, i32 0), i32* %x)\n");
+            llvmCode.append("%2 = load i32, i32* %x, align 4\n");
+            llvmCode.append("ret i32 %2\n");
+            llvmCode.append("}\n");
+            llvmCode.append("\n");
+            llvmCode.append("declare i32 @__isoc99_scanf(i8*, ...) #1\n");
+        }
+
         llvmCode.append("define i32 @main() {\n");
         llvmCode.append("entry:\n");
         
@@ -193,10 +217,12 @@ public class LlvmWriter {
                 ruleCounter++;
                 //TODO code llvm
                 llvmCode.append("rule 22\n");
+                break;
             case 23:
                 ruleCounter++;
                 //TODO code llvm
                 llvmCode.append("rule 23\n");
+                break;
         }
     }
     private void addOp(){
