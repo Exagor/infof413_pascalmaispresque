@@ -1,6 +1,4 @@
 begin
-    if a < b then
-        c := 1
-    else
-        c := 2
+    while a < 10 do
+        a := a + 1
 end

@@ -315,8 +315,10 @@ public class LlvmWriter {
         if (rules.get(ruleCounter)==32){
             ruleCounter++;
             llvmCode.append("rule 32\n");
+            int firstTempVarCounter = tempVarCounter;
             andCond();
             orCond();
+            llvmCode.append("%" + ++tempVarCounter + " = or i1 %" + (firstTempVarCounter) + ", %" + (tempVarCounter-1) + "\n");
         }
         else if (rules.get(ruleCounter)==33){//epsilon
             ruleCounter++;
@@ -337,8 +339,10 @@ public class LlvmWriter {
         if (rules.get(ruleCounter)==35){
             ruleCounter++;
             llvmCode.append("rule 35\n");
+            int firstTempVarCounter = tempVarCounter;
             endCond();
             andCondPrime();
+            llvmCode.append("%" + ++tempVarCounter + " = and i1 %" + (firstTempVarCounter) + ", %" + (tempVarCounter-1) + "\n");
         }
         else if (rules.get(ruleCounter)==36){//epsilon
             ruleCounter++;
@@ -364,8 +368,20 @@ public class LlvmWriter {
             ruleCounter++;
             llvmCode.append("rule 39\n");
             exprArith();
+            int firstTempVarCounter = tempVarCounter;
+            String compOperator;
+            if (rules.get(ruleCounter)==40){
+                compOperator = "eq";
+            }
+            else if (rules.get(ruleCounter)==41){
+                compOperator = "slt";
+            }
+            else{
+                compOperator = "error";
+            }
             comp();
             exprArith();
+            llvmCode.append("%" + ++tempVarCounter + " = icmp " + compOperator + " i32 %" + (firstTempVarCounter) + ", %" + (tempVarCounter-1) + "\n");
         }
     }
     private void comp(){
@@ -384,8 +400,14 @@ public class LlvmWriter {
         if (rules.get(ruleCounter)==42){
             ruleCounter++;
             llvmCode.append("rule 42\n");
+            llvmCode.append("br label %while.cond" + ++labelCounter + "\n");
+            llvmCode.append("while.cond" + labelCounter + ":\n");
             cond();
+            llvmCode.append("br i1 %" + tempVarCounter + ", label %while.body" + labelCounter + ", label %while.end" + labelCounter + "\n");
+            llvmCode.append("while.body" + labelCounter + ":\n");
             instruction();
+            llvmCode.append("br label %while.cond" + labelCounter + "\n");
+            llvmCode.append("while.end" + labelCounter + ":\n");
         }
     }
 
