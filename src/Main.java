@@ -55,7 +55,7 @@ public class Main {
         FileReader reader = new FileReader(input);
         Parser parser = new Parser(reader);
         parser.parse(State.Program);
-        //printParseResult(parser);
+        printParseResult(parser);
         //Write to llvm code
         LlvmWriter llvmWriter = new LlvmWriter(parser.getUsedRules());
         llvmWriter.writeInFile("more/output.ll");
