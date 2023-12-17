@@ -152,6 +152,9 @@ public class LlvmWriter {
                 varMap.put(varList.get(varCounter+1), true);
                 llvmCode.append("\t%" + varList.get(++varCounter) + " = alloca i32, align 4\n");
             }
+            else{
+                varCounter++;
+            }
             int actualVarCounter = varCounter; // permet de garder la valeur de varCounter pour la suite
             exprArith();
             llvmCode.append("\tstore i32 %" + tempVarCounter + ", i32* %" + varList.get(actualVarCounter) + ", align 4\n");
@@ -381,6 +384,9 @@ public class LlvmWriter {
             if(!varMap.get(varList.get(varCounter+1))){ // if the variable is not already declared (false)
                 varMap.put(varList.get(varCounter+1), true);
                 llvmCode.append("\t%" + varList.get(++varCounter) + " = alloca i32, align 4\n");
+            }
+            else{
+                varCounter++;
             }
             llvmCode.append("\tstore i32 %"+ tempVarCounter + ", i32* %" + varList.get(varCounter) + ", align 4\n");
         }
