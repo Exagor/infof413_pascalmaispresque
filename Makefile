@@ -3,6 +3,7 @@ SRC_DIR = src
 TEST_DIR = test
 # Get the files from the test directory
 TEST_FILES := $(wildcard $(TEST_DIR)/*.pmp)
+SOURCE-CODE-llvm=more/output
 .SILENT: all jar compile tests clean
 
 all:compile
@@ -23,7 +24,10 @@ tests: $(TEST_FILES) compile
 	done
 	echo "Done testing"
 run:jar
-	java -jar dist/part3.jar test/test_llvm_basique.pmp 
+	java -jar dist/part3.jar test/euclid.pmp
+llvm:
+	llvm-as $(SOURCE-CODE-llvm).ll -o $(SOURCE-CODE-llvm).bc 
+	lli $(SOURCE-CODE-llvm).bc
 clean:
 	echo "Cleaning..."
 	rm $(SRC_DIR)/*.class

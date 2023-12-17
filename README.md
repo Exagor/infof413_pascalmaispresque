@@ -42,6 +42,28 @@ You can add the -wt flag to display the parse tree of your code followed by the 
 java -jar dist/part3.jar -wt file.tex test/euclid.pmp
 ```
 
+## Execute llvm code
+
+To execute the llvm code, you need to install llvm and clang.
+
+```shell
+sudo apt-get install llvm
+sudo apt-get install clang
+```
+
+Compile your code with the .jar, then you can run the following command to execute the llvm code.
+
+```shell
+llvm-as filename.ll -o filename.bc 
+lli filename.bc
+```
+
+or
+
+```shell
+make llvm
+```
+
 ## How to generate javadoc
 
 Generate the javadoc.
