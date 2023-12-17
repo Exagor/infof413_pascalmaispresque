@@ -16,6 +16,7 @@ public class LlvmWriter {
     private int varCounter = -1; //Begin at -1 because of the first ++
     private int tempVarCounter = -1;
     private int nbCounter = -1;
+    private int labelCounter = 0;
     // create a map of variable names
     private Map<String, Integer> varMap = new HashMap<String, Integer>();
     
@@ -164,11 +165,11 @@ public class LlvmWriter {
             else{
                 operator = "error";
             }
-            addOp();
+            addOp(); // permet de passer au prochain token mais ne fait rien
             int firstTempVarCounter = tempVarCounter;
             multExpr();
-            
             exprArithPrime();
+
             llvmCode.append("%" + ++tempVarCounter + " = " + operator + " i32 %" + (firstTempVarCounter) + ", %" + (tempVarCounter-1) + "\n");
         }
         else if (rules.get(ruleCounter)==16){//epsilon
@@ -201,7 +202,8 @@ public class LlvmWriter {
                 operator = "error";
             }
 
-            multOp();
+            multOp(); // permet de passer au prochain token mais ne fait rien
+
             int firstTempVarCounter = tempVarCounter; // permet de garder la valeur de tempVarCounter pour la suite
 
             term();
@@ -274,8 +276,13 @@ public class LlvmWriter {
             ruleCounter++;
             llvmCode.append("rule 28\n");
             cond();
+            llvmCode.append("br i1 %" + (tempVarCounter-1) + ", label %if.then" + ++labelCounter + ", label %if.else" + labelCounter + "\n");
+            llvmCode.append("if.then" + labelCounter + ":\n");
             instruction();
+            llvmCode.append("if.else" + labelCounter + ":\n");
             ifTail();
+            llvmCode.append("if.end" + labelCounter + ":\n");
+            
         }
     }
     private void ifTail(){
@@ -283,11 +290,14 @@ public class LlvmWriter {
         if (rules.get(ruleCounter)==29){//epsilon
             ruleCounter++;
             llvmCode.append("rule 29\n");
+            llvmCode.append("br label %if.end" + labelCounter + "\n");
+
         }
         else if (rules.get(ruleCounter)==30){
             ruleCounter++;
             llvmCode.append("rule 30\n");
             instruction();
+            llvmCode.append("br label %if.end" + labelCounter + "\n");
         }
     }
     private void cond(){
@@ -382,7 +392,8 @@ public class LlvmWriter {
         if (rules.get(ruleCounter)==43){
             ruleCounter++;
             llvmCode.append("rule 43\n");
-            llvmCode.append("call void @printInt(i32").append(varList.get(++varCounter)).append(")\n");
+            llvmCode.append("%" + ++tempVarCounter + " = load i32, i32* %" + varList.get(++varCounter) + ", align 4\n");
+            llvmCode.append("call void @printInt(i32 %" + tempVarCounter + ")\n");
         }
     }
 
