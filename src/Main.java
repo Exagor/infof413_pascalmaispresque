@@ -57,7 +57,7 @@ public class Main {
         parser.parse(State.Program);
         printParseResult(parser);
         //Write to llvm code
-        LlvmWriter llvmWriter = new LlvmWriter(parser.getUsedRules());
+        LlvmWriter llvmWriter = new LlvmWriter(parser.getUsedRules(), parser.getVarList(), parser.getNbList());
         llvmWriter.writeInFile("more/output.ll");
 
     }
@@ -81,7 +81,7 @@ public class Main {
         output.write(parsetree.toLaTeX());
         output.close();
         //Write to llvm code
-        LlvmWriter llvmWriter = new LlvmWriter(parser.getUsedRules());
+        LlvmWriter llvmWriter = new LlvmWriter(parser.getUsedRules(), parser.getVarList(), parser.getNbList());
         llvmWriter.writeInFile("more/output.ll");
     }
 

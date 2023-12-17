@@ -10,20 +10,29 @@ public class LlvmWriter {
     private StringBuilder llvmCode;
     private int ruleCounter = 0;
     private ArrayList<Integer> rules = new ArrayList<Integer>();
+    private ArrayList<String> varList = new ArrayList<String>();
+    private ArrayList<String> nbList = new ArrayList<String>();
     //help to write llvm with nice variables
     private int varCounter = -1; //Begin at -1 because of the first ++
+    private int tempVarCounter = -1;
+    private int nbCounter = -1;
     // create a map of variable names
     private Map<String, Integer> varMap = new HashMap<String, Integer>();
+    
+    
 
     /**
      * Constructor for LlvmWriter class.
      * @param usedRules ArrayList of used rules.
      */
-    public LlvmWriter(ArrayList<Integer> usedRules) {
+    public LlvmWriter(ArrayList<Integer> usedRules, ArrayList<String> varList, ArrayList<String> nbList) {
         this.llvmCode = new StringBuilder();
         this.rules = usedRules;
-
+        this.varList = varList;
+        this.nbList = nbList;
         beginRules(); //we launch the traduction of the rules in the constructor
+        System.out.println(varList.toString());
+        System.out.println(nbList.toString());
     }
 
     /**
@@ -37,30 +46,6 @@ public class LlvmWriter {
     }
 
     private void program(){//1
-        if (rules.contains(43)) {// add the println definition if needed
-            llvmCode.append("@.strP = private unnamed_addr constant [4 x i8] c\"%d\\0A\\00\", align 1\n");
-            llvmCode.append("define void @println(i32 %x) #0 {\n");
-            llvmCode.append("%1 = alloca i32, align 4\n");
-            llvmCode.append("store i32 %x, i32* %1, align 4\n");
-            llvmCode.append("%2 = load i32, i32* %1, align 4\n");
-            llvmCode.append("%3 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.strP, i32 0, i32 0), i32 %2)\n");
-            llvmCode.append("ret void\n");
-            llvmCode.append("}\n");
-            llvmCode.append("\n");
-            llvmCode.append("declare i32 @printf(i8*, ...) #1\n");
-        }
-        if (rules.contains(44)){
-            llvmCode.append("@.strR = private unnamed_addr constant [3 x i8] c\"%d\\00\", align 1\n");
-            llvmCode.append("define i32 @readInt() #0 {\n");
-            llvmCode.append("%x = alloca i32, align 4\n");
-            llvmCode.append("%1 = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.strR, i32 0, i32 0), i32* %x)\n");
-            llvmCode.append("%2 = load i32, i32* %x, align 4\n");
-            llvmCode.append("ret i32 %2\n");
-            llvmCode.append("}\n");
-            llvmCode.append("\n");
-            llvmCode.append("declare i32 @__isoc99_scanf(i8*, ...) #1\n");
-        }
-
         llvmCode.append("define i32 @main() {\n");
         llvmCode.append("entry:\n");
         
@@ -146,14 +131,14 @@ public class LlvmWriter {
     }
     
     private void assign(){//13
-        varCounter++; //new variable name
-        int actualVarName=varCounter; //marche pas
         
         if (rules.get(ruleCounter)==13){
             ruleCounter++;
             llvmCode.append("rule 13\n");
-            llvmCode.append("%").append(actualVarName).append(" = alloca i32, align 4\n");
+            llvmCode.append("%").append(varList.get(++varCounter)).append(" = alloca i32, align 4\n");
+            int actualVarCounter = varCounter; // permet de garder la valeur de varCounter pour la suite
             exprArith();
+            llvmCode.append("store i32 %").append(tempVarCounter).append(", i32* %").append(varList.get(actualVarCounter)).append(", align 4\n");
         }
     }
     private void exprArith(){//14
@@ -169,9 +154,22 @@ public class LlvmWriter {
         if (rules.get(ruleCounter)==15){
             ruleCounter++;
             llvmCode.append("rule 15\n");
+            String operator;
+            if(rules.get(ruleCounter)== 24){
+                operator = "add";
+            }
+            else if(rules.get(ruleCounter)== 25){
+                operator = "sub";
+            }
+            else{
+                operator = "error";
+            }
             addOp();
+            int firstTempVarCounter = tempVarCounter;
             multExpr();
+            
             exprArithPrime();
+            llvmCode.append("%" + ++tempVarCounter + " = " + operator + " i32 %" + (firstTempVarCounter) + ", %" + (tempVarCounter-1) + "\n");
         }
         else if (rules.get(ruleCounter)==16){//epsilon
             ruleCounter++;
@@ -191,9 +189,20 @@ public class LlvmWriter {
         if (rules.get(ruleCounter)==18){
             ruleCounter++;
             llvmCode.append("rule 18\n");
+            String operator;
+            if(rules.get(ruleCounter)== 26){
+                operator = "mul";
+            }
+            else if(rules.get(ruleCounter)== 27){
+                operator = "sdiv";
+            }
+            else{
+                operator = "error";
+            }
             multOp();
             term();
             multExprPrime();
+            llvmCode.append("%" + ++tempVarCounter + " = " + operator + " i32 %" + (tempVarCounter-2) + ", %" + (tempVarCounter-1) + "\n");
         }
         else if (rules.get(ruleCounter)==19){//epsilon
             ruleCounter++;
@@ -217,12 +226,17 @@ public class LlvmWriter {
                 ruleCounter++;
                 //TODO code llvm
                 llvmCode.append("rule 22\n");
+                llvmCode.append("%" + ++tempVarCounter + " = alloca i32, align 4\n")
+                        .append("store i32 %" + varList.get(++varCounter) + ", i32* %" + tempVarCounter + ", align 4\n");
                 break;
             case 23:
                 ruleCounter++;
                 //TODO code llvm
                 llvmCode.append("rule 23\n");
+                llvmCode.append("%" + ++tempVarCounter + " = alloca i32, align 4\n")
+                        .append("store i32 " + nbList.get(++nbCounter) + ", i32* %" + tempVarCounter + ", align 4\n");
                 break;
+
         }
     }
     private void addOp(){
@@ -361,13 +375,17 @@ public class LlvmWriter {
         if (rules.get(ruleCounter)==43){
             ruleCounter++;
             llvmCode.append("rule 43\n");
+            llvmCode.append("call void @printInt(i32").append(varList.get(++varCounter)).append(")\n");
         }
     }
 
     private void instRead(){//44
         if (rules.get(ruleCounter)==44){
             ruleCounter++;
-            llvmCode.append("Read cool\n");
+            llvmCode.append("rule 44\n");
+            llvmCode.append("%").append(++tempVarCounter).append(" call i32 @readInt()\n");
+            llvmCode.append("%" + varList.get(++varCounter) + " = alloca i32, align 4\n");
+            llvmCode.append("store i32 %").append(tempVarCounter).append(", i32* %").append(varList.get(varCounter)).append(", align 4\n");
         }
     }
 

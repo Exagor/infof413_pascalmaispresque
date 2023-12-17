@@ -1,6 +1,7 @@
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Parser class for parsing the input file.
@@ -13,6 +14,8 @@ public class Parser {
     private ArrayList<Integer> usedrules = new ArrayList<Integer>();
     ActionTableReader actionTableReader = new ActionTableReader();
     GrammarAnalyser grammarAnalyser = new GrammarAnalyser();
+    private ArrayList<String> varList = new ArrayList<String>();
+    private ArrayList<String> nbList = new ArrayList<String>();
 
     /**
      * Constructor for Parser class.
@@ -87,6 +90,12 @@ public class Parser {
             // If the element is a lexical unit, check if it matches the current symbol.
             else if (elem instanceof LexicalUnit){
                 if (currentSymbol.getType() == elem){
+                    if(currentSymbol.getType() == LexicalUnit.VARNAME){
+                        varList.add((String)currentSymbol.getValue());
+                    }
+                    else if(currentSymbol.getType() == LexicalUnit.NUMBER){
+                        nbList.add((String)currentSymbol.getValue());
+                    }
                     ParseTree child = new ParseTree(currentSymbol);
                     cldn.add(child);
                     getNextSymbol();           
@@ -116,5 +125,11 @@ public class Parser {
         State state = null;
         state = grammarAnalyser.getState(input);
         return state;
+    }
+    public ArrayList<String> getVarList(){
+        return varList;
+    }
+    public ArrayList<String> getNbList(){
+        return nbList;
     }
 }

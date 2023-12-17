@@ -23,7 +23,7 @@ tests: $(TEST_FILES) compile
 	done
 	echo "Done testing"
 run:jar
-	java -jar dist/part3.jar test/euclid.pmp 
+	java -jar dist/part3.jar test/test_llvm_basique.pmp 
 clean:
 	echo "Cleaning..."
 	rm $(SRC_DIR)/*.class
