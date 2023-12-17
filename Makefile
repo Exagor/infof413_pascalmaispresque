@@ -22,6 +22,8 @@ tests: $(TEST_FILES) compile
 		java -cp $(SRC_DIR) $(JAVA_PROGRAM) "$$test_file"; \
 	done
 	echo "Done testing"
+run:jar
+	java -jar dist/part3.jar test/euclid.pmp 
 clean:
 	echo "Cleaning..."
 	rm $(SRC_DIR)/*.class

@@ -36,7 +36,6 @@ public class LlvmWriter {
         }
     }
 
-
     private void program(){//1
         llvmCode.append("define i32 @main() {\n");
         llvmCode.append("entry:\n");
