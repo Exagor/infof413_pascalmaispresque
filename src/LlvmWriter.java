@@ -279,6 +279,7 @@ public class LlvmWriter {
             llvmCode.append("br i1 %" + (tempVarCounter-1) + ", label %if.then" + ++labelCounter + ", label %if.else" + labelCounter + "\n");
             llvmCode.append("if.then" + labelCounter + ":\n");
             instruction();
+            llvmCode.append("br label %if.end" + labelCounter + "\n");
             llvmCode.append("if.else" + labelCounter + ":\n");
             ifTail();
             llvmCode.append("if.end" + labelCounter + ":\n");

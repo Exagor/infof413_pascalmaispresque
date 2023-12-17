@@ -1,5 +1,6 @@
 begin
-    c := d+4*f*1...
-    read(a)...
-    print(a)
+    if a < b then
+        c := 1
+    else
+        c := 2
 end
