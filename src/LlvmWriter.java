@@ -189,6 +189,7 @@ public class LlvmWriter {
         if (rules.get(ruleCounter)==18){
             ruleCounter++;
             llvmCode.append("rule 18\n");
+            // save the operator
             String operator;
             if(rules.get(ruleCounter)== 26){
                 operator = "mul";
@@ -199,10 +200,14 @@ public class LlvmWriter {
             else{
                 operator = "error";
             }
+
             multOp();
+            int firstTempVarCounter = tempVarCounter; // permet de garder la valeur de tempVarCounter pour la suite
+
             term();
             multExprPrime();
-            llvmCode.append("%" + ++tempVarCounter + " = " + operator + " i32 %" + (tempVarCounter-2) + ", %" + (tempVarCounter-1) + "\n");
+
+            llvmCode.append("%" + ++tempVarCounter + " = " + operator + " i32 %" + (firstTempVarCounter) + ", %" + (tempVarCounter-1) + "\n");
         }
         else if (rules.get(ruleCounter)==19){//epsilon
             ruleCounter++;
@@ -221,6 +226,8 @@ public class LlvmWriter {
                 ruleCounter++;
                 llvmCode.append("rule 21\n");
                 exprArith();
+                // change the sign of the last tempVarCounter
+                llvmCode.append("%" + ++tempVarCounter + " = sub i32 0, %" + (tempVarCounter-1) + "\n");
                 break;
             case 22:
                 ruleCounter++;
