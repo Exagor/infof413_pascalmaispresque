@@ -12,13 +12,13 @@ public class LlvmWriter {
     private ArrayList<Integer> rules = new ArrayList<Integer>();
     private ArrayList<String> varList = new ArrayList<String>();
     private ArrayList<String> nbList = new ArrayList<String>();
+    private Map<String, Boolean> varMap = new HashMap<String, Boolean>();
     //help to write llvm with nice variables
     private int varCounter = -1; //Begin at -1 because of the first ++
     private int tempVarCounter = -1;
     private int nbCounter = -1;
     private int labelCounter = 0;
     // create a map of variable names
-    private Map<String, Integer> varMap = new HashMap<String, Integer>();
     
     
 
@@ -31,9 +31,16 @@ public class LlvmWriter {
         this.rules = usedRules;
         this.varList = varList;
         this.nbList = nbList;
+        initializeVarMap();
         beginRules(); //we launch the traduction of the rules in the constructor
         System.out.println(varList.toString());
         System.out.println(nbList.toString());
+    }
+
+    private void initializeVarMap(){
+        for (String var : varList){
+            varMap.put(var, false);
+        }
     }
 
     /**
@@ -141,7 +148,10 @@ public class LlvmWriter {
         
         if (rules.get(ruleCounter)==13){
             ruleCounter++;
-            llvmCode.append("\t%" + varList.get(++varCounter) + " = alloca i32, align 4\n");
+            if(!varMap.get(varList.get(varCounter+1))){ // if the variable is not already declared (false
+                varMap.put(varList.get(varCounter+1), true);
+                llvmCode.append("\t%" + varList.get(++varCounter) + " = alloca i32, align 4\n");
+            }
             int actualVarCounter = varCounter; // permet de garder la valeur de varCounter pour la suite
             exprArith();
             llvmCode.append("\tstore i32 %" + tempVarCounter + ", i32* %" + varList.get(actualVarCounter) + ", align 4\n");
@@ -230,13 +240,11 @@ public class LlvmWriter {
                 break;
             case 22:
                 ruleCounter++;
-                llvmCode.append("\t%" + ++tempVarCounter + " = alloca i32, align 4\n")
-                        .append("\tstore i32 %" + varList.get(++varCounter) + ", i32* %" + tempVarCounter + ", align 4\n");
+                llvmCode.append("\t%" + ++tempVarCounter + " = load i32, i32* %" + varList.get(++varCounter) + ", align 4\n");
                 break;
             case 23:
                 ruleCounter++;
-                llvmCode.append("\t%" + ++tempVarCounter + " = alloca i32, align 4\n")
-                        .append("\tstore i32 " + nbList.get(++nbCounter) + ", i32* %" + tempVarCounter + ", align 4\n");
+                llvmCode.append("\t%" + ++tempVarCounter + " = add i32 0, " + nbList.get(++nbCounter) + "\n");
                 break;
 
         }
@@ -361,7 +369,7 @@ public class LlvmWriter {
         if (rules.get(ruleCounter)==43){
             ruleCounter++;
             llvmCode.append("\t%" + ++tempVarCounter + " = load i32, i32* %" + varList.get(++varCounter) + ", align 4\n");
-            llvmCode.append("\tcall void @printInt(i32 %" + tempVarCounter + ")\n");
+            llvmCode.append("\tcall void @println(i32 %" + tempVarCounter + ")\n");
         }
     }
 
@@ -369,7 +377,11 @@ public class LlvmWriter {
         if (rules.get(ruleCounter)==44){
             ruleCounter++;
             llvmCode.append("\t%"+ ++tempVarCounter + " = call i32 @readInt()\n");
-            llvmCode.append("\t%" + varList.get(++varCounter) + " = alloca i32, align 4\n");
+        
+            if(!varMap.get(varList.get(varCounter+1))){ // if the variable is not already declared (false)
+                varMap.put(varList.get(varCounter+1), true);
+                llvmCode.append("\t%" + varList.get(++varCounter) + " = alloca i32, align 4\n");
+            }
             llvmCode.append("\tstore i32 %"+ tempVarCounter + ", i32* %" + varList.get(varCounter) + ", align 4\n");
         }
     }
