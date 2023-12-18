@@ -18,8 +18,6 @@ public class LlvmWriter {
     private int tempVarCounter = -1;
     private int nbCounter = -1;
     private int labelCounter = 0;
-    // create a map of variable names
-    
     
 
     /**
@@ -37,6 +35,9 @@ public class LlvmWriter {
         System.out.println(nbList.toString());
     }
 
+    /**
+     * Method for initializing the map of variables.
+     */
     private void initializeVarMap(){
         for (String var : varList){
             varMap.put(var, false);
@@ -52,7 +53,9 @@ public class LlvmWriter {
             program();
         }
     }
-
+    /**
+     * Method linked to the first rule of the grammar.
+     */
     private void program(){//1
         if (rules.contains(43)) {// add the println definition if needed
             llvmCode.append("@.strP = private unnamed_addr constant [4 x i8] c\"%d\\0A\\00\", align 1\n");
@@ -86,7 +89,9 @@ public class LlvmWriter {
         llvmCode.append("\tret i32 0\n");
         llvmCode.append("}\n");
     }
-
+    /**
+     * Method linked to the second rule of the grammar.
+     */
     private void code(){//2
         //Code llvm avec append 
         if (rules.get(ruleCounter) == 2) {
@@ -97,7 +102,9 @@ public class LlvmWriter {
             ruleCounter++;
         }
     }
-
+    /**
+     * Method linked to the third rule of the grammar.
+     */
     private void instList(){//4
         //Code llvm avec append 
         if (rules.get(ruleCounter) == 4) {//Instruction
@@ -106,6 +113,9 @@ public class LlvmWriter {
             instructionEnd();
         }
     }
+    /**
+     * Method linked to the fourth rule of the grammar.
+     */
     private void instructionEnd(){
         if (rules.get(ruleCounter)==5){//epsilon
             ruleCounter++;
@@ -115,6 +125,9 @@ public class LlvmWriter {
             instList();
         }
     }
+    /**
+     * Method linked to the fifth rule of the grammar.
+     */
     private void instruction(){//7
         switch (rules.get(ruleCounter)){
             case 7:
@@ -143,7 +156,9 @@ public class LlvmWriter {
                 break;
         }
     }
-    
+    /**
+     * Method linked to the grammar rules
+     */
     private void assign(){//13
         
         if (rules.get(ruleCounter)==13){
@@ -160,6 +175,9 @@ public class LlvmWriter {
             llvmCode.append("\tstore i32 %" + tempVarCounter + ", i32* %" + varList.get(actualVarCounter) + ", align 4\n");
         }
     }
+    /**
+     * Method linked to the grammar rules
+     */
     private void exprArith(){//14
         if (rules.get(ruleCounter)==14){
             ruleCounter++;
@@ -167,6 +185,9 @@ public class LlvmWriter {
             exprArithPrime();
         }
     }
+    /**
+     * Method linked to the grammar rules
+     */
     private void exprArithPrime(){
         if (rules.get(ruleCounter)==15){
             ruleCounter++;
@@ -193,6 +214,9 @@ public class LlvmWriter {
             ruleCounter++;
         }
     }
+    /**
+     * Method linked to the grammar rules
+     */
     private void multExpr(){//17
         if (rules.get(ruleCounter)==17){
             ruleCounter++;
@@ -200,6 +224,9 @@ public class LlvmWriter {
             multExprPrime();
         }
     }
+    /**
+     * Method linked to the grammar rules
+     */
     private void multExprPrime(){
         if (rules.get(ruleCounter)==18){
             ruleCounter++;
@@ -229,6 +256,9 @@ public class LlvmWriter {
             ruleCounter++;
         }
     }
+    /**
+     * Method linked to the grammar rules
+     */
     private void term(){//20
         switch (rules.get(ruleCounter)){
             case 20:
@@ -252,6 +282,9 @@ public class LlvmWriter {
 
         }
     }
+    /**
+     * Method linked to the grammar rules
+     */
     private void instIf(){//28
         if (rules.get(ruleCounter)==28){
             ruleCounter++;
@@ -266,6 +299,9 @@ public class LlvmWriter {
             
         }
     }
+    /**
+     * Method linked to the grammar rules
+     */
     private void ifTail(){
         if (rules.get(ruleCounter)==29){//epsilon
             ruleCounter++;
@@ -277,6 +313,9 @@ public class LlvmWriter {
             llvmCode.append("\tbr label %if.end" + labelCounter + "\n");
         }
     }
+    /**
+     * Method linked to the grammar rules
+     */
     private void cond(){
         if (rules.get(ruleCounter)==31){
             ruleCounter++;
@@ -284,6 +323,9 @@ public class LlvmWriter {
             orCond();
         }
     }
+    /**
+     * Method linked to the grammar rules
+     */
     private void orCond(){
         if (rules.get(ruleCounter)==32){
             ruleCounter++;
@@ -296,6 +338,9 @@ public class LlvmWriter {
             ruleCounter++;
         }
     }
+    /**
+     * Method linked to the grammar rules
+     */
     private void andCond(){
         if (rules.get(ruleCounter)==34){
             ruleCounter++;
@@ -303,6 +348,9 @@ public class LlvmWriter {
             andCondPrime();
         }
     }
+    /**
+     * Method linked to the grammar rules
+     */
     private void andCondPrime(){
         if (rules.get(ruleCounter)==35){
             ruleCounter++;
@@ -315,6 +363,9 @@ public class LlvmWriter {
             ruleCounter++;
         }
     }
+    /**
+     * Method linked to the grammar rules
+     */
     private void endCond(){
         if (rules.get(ruleCounter)==37){
             ruleCounter++;
@@ -325,6 +376,9 @@ public class LlvmWriter {
             simpleCond();
         }
     }
+    /**
+     * Method linked to the grammar rules
+     */
     private void simpleCond(){
         if (rules.get(ruleCounter)==39){
             ruleCounter++;
@@ -345,6 +399,9 @@ public class LlvmWriter {
             llvmCode.append("\t%" + ++tempVarCounter + " = icmp " + compOperator + " i32 %" + (firstTempVarCounter) + ", %" + (tempVarCounter-1) + "\n");
         }
     }
+    /**
+     * Method linked to the grammar rules
+     */
     private void comp(){
         if (rules.get(ruleCounter)==40){
             ruleCounter++;
@@ -353,6 +410,9 @@ public class LlvmWriter {
             ruleCounter++;
         }
     }
+    /**
+     * Method linked to the grammar rules
+     */
     private void instWhile(){//42
         if (rules.get(ruleCounter)==42){
             ruleCounter++;
@@ -367,7 +427,9 @@ public class LlvmWriter {
             llvmCode.append("while.end" + saveLabelCounter + ":\n");
         }
     }
-
+    /**
+     * Method linked to the grammar rules
+     */
     private void instPrint(){//43
         if (rules.get(ruleCounter)==43){
             ruleCounter++;
@@ -375,7 +437,9 @@ public class LlvmWriter {
             llvmCode.append("\tcall void @println(i32 %" + tempVarCounter + ")\n");
         }
     }
-
+    /**
+     * Method linked to the grammar rules
+     */
     private void instRead(){//44
         if (rules.get(ruleCounter)==44){
             ruleCounter++;
@@ -391,7 +455,10 @@ public class LlvmWriter {
             llvmCode.append("\tstore i32 %"+ tempVarCounter + ", i32* %" + varList.get(varCounter) + ", align 4\n");
         }
     }
-
+    /**
+     * To write the llvm code in a file.
+     * @param fileName Name of the file.
+     */
     public void writeInFile(String fileName) {
         try {
         FileWriter writer = new FileWriter(fileName);
