@@ -1,18 +1,13 @@
 import java.io.FileReader;
 import java.io.FileWriter;
-// import java.io.PrintStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
     private static HashMap<String, Integer> symbolTable = new HashMap<>();
 
-    
     /** 
      * @param symbol
      */
@@ -32,6 +27,7 @@ public class Main {
             System.out.println(varName + "   " + symbolTable.get(varName));
         }
     }
+
     /**
      * Print the result of the parsing
      * @param parser
@@ -42,6 +38,7 @@ public class Main {
         }
         System.out.println();
     }
+
     /**
      * Run the default option without flags
      * @param sourceFilePmp
@@ -55,10 +52,11 @@ public class Main {
         FileReader reader = new FileReader(input);
         Parser parser = new Parser(reader);
         parser.parse(State.Program);
-        printParseResult(parser);
+        //printParseResult(parser);
         //Write to llvm code
         LlvmWriter llvmWriter = new LlvmWriter(parser.getUsedRules(), parser.getVarList(), parser.getNbList());
-        llvmWriter.writeInFile("more/output.ll");
+        llvmWriter.writeInFile(sourceFilePmp.replace(".pmp",".ll").replace("test/","more/"));
+        //llvmWriter.writeInFile("more/output.ll");
 
     }
 

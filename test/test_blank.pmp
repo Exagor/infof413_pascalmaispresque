@@ -1,6 +1,8 @@
 begin
     daz    :=    5...
     print    (daz)...
-    dzfezfe...
-    if              azfzafz
+    if              daz    =    5 then
+        print    (daz)
+    else
+        print    (daz)
 end

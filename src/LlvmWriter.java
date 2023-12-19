@@ -31,8 +31,6 @@ public class LlvmWriter {
         this.nbList = nbList;
         initializeVarMap();
         beginRules(); //we launch the traduction of the rules in the constructor
-        System.out.println(varList.toString());
-        System.out.println(nbList.toString());
     }
 
     /**
@@ -53,6 +51,7 @@ public class LlvmWriter {
             program();
         }
     }
+
     /**
      * Method linked to the first rule of the grammar.
      */
@@ -89,6 +88,7 @@ public class LlvmWriter {
         llvmCode.append("\tret i32 0\n");
         llvmCode.append("}\n");
     }
+
     /**
      * Method linked to the second rule of the grammar.
      */
@@ -113,6 +113,7 @@ public class LlvmWriter {
             instructionEnd();
         }
     }
+
     /**
      * Method linked to the fourth rule of the grammar.
      */
@@ -125,6 +126,7 @@ public class LlvmWriter {
             instList();
         }
     }
+    
     /**
      * Method linked to the fifth rule of the grammar.
      */

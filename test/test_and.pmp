@@ -1,0 +1,8 @@
+begin
+    a := 2 ...
+    b := 1 ...
+    if a < b and b < 5 then
+        print(a)
+    else
+        print(b)
+end

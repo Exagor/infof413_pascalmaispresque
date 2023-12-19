@@ -3,11 +3,12 @@ SRC_DIR = src
 TEST_DIR = test
 # Get the files from the test directory
 TEST_FILES := $(wildcard $(TEST_DIR)/*.pmp)
-SOURCE-CODE-llvm=more/output
+FILE = euclid
+SOURCE-CODE-llvm = more/euclid
 .SILENT: all jar compile tests clean
 
 all:compile
-	java -cp $(SRC_DIR) $(JAVA_PROGRAM) $(TEST_DIR)/euclid.pmp
+	java -cp $(SRC_DIR) $(JAVA_PROGRAM) $(TEST_DIR)/$(FILE).pmp
 
 jar:compile
 	jar cfm dist/part3.jar more/Main.txt -C $(SRC_DIR) .
@@ -24,14 +25,16 @@ tests: $(TEST_FILES) compile
 	done
 	echo "Done testing"
 run:jar
-	java -jar dist/part3.jar test/euclid.pmp
+	java -jar dist/part3.jar test/$(FILE).pmp
 llvm:
-	llvm-as $(SOURCE-CODE-llvm).ll -o $(SOURCE-CODE-llvm).bc 
-	lli $(SOURCE-CODE-llvm).bc
+	llvm-as more/$(FILE).ll -o more/$(FILE).bc 
+	lli more/$(FILE).bc
 clean:
 	echo "Cleaning..."
 	rm $(SRC_DIR)/*.class
 	rm $(SRC_DIR)/LexicalAnalyzer.java~
+	rm more/*.ll
+	rm more/*.bc
 	echo "Cleaning done"
 
 .PHONY: tests clean
