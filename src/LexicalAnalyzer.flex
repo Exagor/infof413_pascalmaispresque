@@ -14,6 +14,7 @@
 VARNAME = [a-z][a-zA-Z0-9_]*
 NUMBER = [1-9][0-9]*|0
 WHITESPACE = [ \t\r\n]+
+BADVARNAMES = [0-9]+[a-zA-Z_]+[a-zA-Z0-9_]*
 
 %eofval{
     if (yystate() == LONG_COMMENT) {
@@ -27,6 +28,7 @@ WHITESPACE = [ \t\r\n]+
 
 // initial state
 <YYINITIAL> {
+    
     {WHITESPACE} { }
     "begin" {return new Symbol(LexicalUnit.BEG, yyline, yycolumn, yytext());} 
     "end" {return new Symbol(LexicalUnit.END, yyline, yycolumn, yytext());}
@@ -51,7 +53,7 @@ WHITESPACE = [ \t\r\n]+
     "do" {return new Symbol(LexicalUnit.DO, yyline, yycolumn, yytext());}
     "print" {return new Symbol(LexicalUnit.PRINT, yyline, yycolumn, yytext());}
     "read" {return new Symbol(LexicalUnit.READ, yyline, yycolumn, yytext());}
-    
+    {BADVARNAMES} {System.out.println("Illegal variable name: " + yytext()); System.exit(1);}
     {VARNAME} {return new Symbol(LexicalUnit.VARNAME, yyline, yycolumn, yytext());}
     {NUMBER} {return new Symbol(LexicalUnit.NUMBER, yyline, yycolumn, yytext());}
     "''" {yybegin(LONG_COMMENT);}
