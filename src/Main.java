@@ -55,7 +55,7 @@ public class Main {
         //printParseResult(parser);
         //Write to llvm code
         LlvmWriter llvmWriter = new LlvmWriter(parser.getUsedRules(), parser.getVarList(), parser.getNbList());
-        llvmWriter.writeInFile(sourceFilePmp.replace(".pmp",".ll").replace("test/","more/"));
+        llvmWriter.writeInFile(sourceFilePmp.replace(".pmp",".ll").replace("test/test_llvm/","more/"));
         //llvmWriter.writeInFile("more/output.ll");
 
     }

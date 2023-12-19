@@ -291,7 +291,7 @@ public class LlvmWriter {
         if (rules.get(ruleCounter)==28){
             ruleCounter++;
             cond();
-            llvmCode.append("\tbr i1 %" + (tempVarCounter-1) + ", label %if.then" + ++labelCounter + ", label %if.else" + labelCounter + "\n");
+            llvmCode.append("\tbr i1 %" + (tempVarCounter) + ", label %if.then" + ++labelCounter + ", label %if.else" + labelCounter + "\n");
             llvmCode.append("if.then" + labelCounter + ":\n");
             instruction();
             llvmCode.append("\tbr label %if.end" + labelCounter + "\n");

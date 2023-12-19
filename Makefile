@@ -1,9 +1,11 @@
 JAVA_PROGRAM = Main
 SRC_DIR = src
-TEST_DIR = test
+TEST_DIR = test/test_scanner_parser
+LLMV_TEST_DIR = test/test_llvm
 # Get the files from the test directory
 TEST_FILES := $(wildcard $(TEST_DIR)/*.pmp)
-FILE = euclid
+LLVM_TEST_FILES := $(wildcard $(LLMV_TEST_DIR)/*.pmp)
+FILE = test_and
 SOURCE-CODE-llvm = more/euclid
 .SILENT: all jar compile tests clean
 
@@ -24,6 +26,18 @@ tests: $(TEST_FILES) compile
 		java -cp $(SRC_DIR) $(JAVA_PROGRAM) "$$test_file"; \
 	done
 	echo "Done testing"
+
+test-llvm: $(LLVM_TEST_FILES) compile
+	echo "Compiling LLVM files"
+	for test_file in $(LLVM_TEST_FILES); do \
+		echo "Compiling $$test_file to LLVM IR"; \
+		echo "------------------\n"; \
+		java -cp $(SRC_DIR) $(JAVA_PROGRAM) "$$test_file"; \
+	done
+
+
+
+
 run:jar
 	java -jar dist/part3.jar test/$(FILE).pmp
 llvm:

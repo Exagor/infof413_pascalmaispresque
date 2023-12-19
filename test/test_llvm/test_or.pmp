@@ -1,0 +1,8 @@
+begin 
+    a:= 4...
+    b:= 10...
+    if b < a or b < 15 then
+        print(a)
+    else 
+        print(b)
+end
