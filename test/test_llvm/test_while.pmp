@@ -1,5 +1,5 @@
 begin 
-    a := 0
+    a := 0...
     while a < 12 do
         begin
             print(a)...

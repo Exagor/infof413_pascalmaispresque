@@ -5,7 +5,7 @@ LLMV_TEST_DIR = test/test_llvm
 # Get the files from the test directory
 TEST_FILES := $(wildcard $(TEST_DIR)/*.pmp)
 LLVM_TEST_FILES := $(wildcard $(LLMV_TEST_DIR)/*.pmp)
-FILE = test_and
+FILE = test_while
 SOURCE-CODE-llvm = more/euclid
 .SILENT: all jar compile tests clean
 
