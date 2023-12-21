@@ -38,6 +38,15 @@ public class Main {
         }
         System.out.println();
     }
+    /**
+     * Return the name of the file without the path
+     * @param sourceFilePmp
+     */
+    private static String getNameFile(String sourceFilePmp){
+        String[] parts = sourceFilePmp.split("/");
+        String nameFile = parts[parts.length-1];
+        return nameFile;
+    }
 
     /**
      * Run the default option without flags
@@ -55,9 +64,7 @@ public class Main {
         //printParseResult(parser);
         //Write to llvm code
         LlvmWriter llvmWriter = new LlvmWriter(parser.getUsedRules(), parser.getVarList(), parser.getNbList());
-        llvmWriter.writeInFile(sourceFilePmp.replace(".pmp",".ll").replace("test/test_llvm/","more/"));
-        //llvmWriter.writeInFile("more/output.ll");
-
+        llvmWriter.writeInFile("more/"+getNameFile(sourceFilePmp).replace(".pmp",".ll"));
     }
 
     /**
@@ -80,7 +87,7 @@ public class Main {
         output.close();
         //Write to llvm code
         LlvmWriter llvmWriter = new LlvmWriter(parser.getUsedRules(), parser.getVarList(), parser.getNbList());
-        llvmWriter.writeInFile("more/output.ll");
+        llvmWriter.writeInFile("more/"+getNameFile(sourceFilePmp).replace(".pmp",".ll"));
     }
 
     /**

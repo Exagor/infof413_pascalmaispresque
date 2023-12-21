@@ -5,7 +5,7 @@ LLMV_TEST_DIR = test/test_llvm
 # Get the files from the test directory
 TEST_FILES := $(wildcard $(TEST_DIR)/*.pmp)
 LLVM_TEST_FILES := $(wildcard $(LLMV_TEST_DIR)/*.pmp)
-FILE = test_while
+FILE = euclid
 SOURCE-CODE-llvm = more/euclid
 .SILENT: all jar compile tests clean
 
@@ -35,14 +35,13 @@ test-llvm: $(LLVM_TEST_FILES) compile
 		java -cp $(SRC_DIR) $(JAVA_PROGRAM) "$$test_file"; \
 	done
 
-
-
-
 run:jar
-	java -jar dist/part3.jar test/$(FILE).pmp
+	java -jar dist/part3.jar test/test_llvm/$(FILE).pmp
+
 llvm:
 	llvm-as more/$(FILE).ll -o more/$(FILE).bc 
 	lli more/$(FILE).bc
+	
 clean:
 	echo "Cleaning..."
 	rm $(SRC_DIR)/*.class
